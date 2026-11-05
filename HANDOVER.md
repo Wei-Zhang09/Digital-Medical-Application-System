@@ -46,6 +46,20 @@
 - **T4 完成并实测**：`Msg`(20000/10000/10006)、`PageBean`、Account 四层实体、`JwtUtil`/`JwtFilter`、四个 Handler、`WebSecurityConfig`（放行 login/swagger/image、STATELESS、CORS、`@EnableGlobalMethodSecurity`）。实测：admin_1 → 20000/utype=1；王小明4125（UTF-8 提交）→ 20000/utype=2；错口令 → 10000；无 token → 10006
 - 代码：`backend/`、`frontend/`、`sql/`、`scripts/`、`docs/`
 
+### T4 落地时与计划的偏差（后续任务按此对齐）
+
+| 计划写法 | 实际 | 原因 |
+| --- | --- | --- |
+| `domain/do/AccountDo.java` | `domain/dataobject/AccountDo.java` | `do` 是 Java 关键字，不能作包名 |
+| `handler/AccessDeniedHandler.java` | `handler/AuthAccessDeniedHandler.java` | 与 Spring 同名接口冲突，类名加 Auth 前缀 |
+| 登录返回 `utype:"1"` | `utype` 短码 "1"/"2" + `role` 完整 "ROLE_1"/"ROLE_2" 都给 | 前端判断用短码，`/api/permissions` 用完整角色名 |
+| 未明确 | 四个 Handler 的 HTTP 状态码一律 200，业务码在响应体 | axios 只走成功分支，10006 在前端拦截器里判 |
+| 未明确 | `server.servlet.encoding.force=true` | 否则非 UTF-8 客户端提交中文用户名查不到用户 |
+
+- 回归脚本：`bash scripts/verify_t4.sh`（启动 jar → 跑 10 组用例 → 停应用），报告落 `.dev/verify-t4.txt`；`scripts/verify_t4_jwt.py` 校验 claim，`scripts/make_expired_jwt.py` 造过期 token
+- 尚未验证：`@RolesAllowed/@PreAuthorize` 角色拦截（AccessDeniedHandler 已接好但无接口可触发，T6 加注解时验）；`/image/**` 只是放行，资源映射在 T6 上传功能里加
+
+
 ## 下一步
 
 1. T5 菜单权限树 `/api/permissions`（管理员 9 项 / 医师 5 项）
