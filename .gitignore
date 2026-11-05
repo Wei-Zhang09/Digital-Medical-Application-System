@@ -27,3 +27,6 @@ Thumbs.db
 docs/report/*.pdf
 # 报告 docx 是生成物（scripts/export_report.py 可随时重建），体积大且推送易超时，不进版本库
 docs/report/*.docx
+
+# 交接文档只留本地（含环境细节与密钥），不进仓库
+HANDOVER.md
