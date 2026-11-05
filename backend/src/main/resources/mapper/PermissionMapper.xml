@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qst.medical.mapper.PermissionMapper">
+
+    <resultMap id="permissionMap" type="com.qst.medical.domain.entity.Permission">
+        <id column="id" property="id"/>
+        <result column="pid" property="pid"/>
+        <result column="name" property="name"/>
+        <result column="path" property="path"/>
+        <result column="component" property="component"/>
+        <result column="level" property="level"/>
+        <result column="title" property="title"/>
+    </resultMap>
+
+    <!-- 按角色取菜单：permission 通过 role_permission 关联到角色 -->
+    <select id="selectPermissionByRole" resultMap="permissionMap">
+        SELECT p.id,
+               p.pid,
+               p.name,
+               p.path,
+               p.component,
+               p.level,
+               p.title
+        FROM permission p
+                 INNER JOIN role_permission rp ON rp.per_id = p.id
+        WHERE rp.roleName = #{roleName}
+        ORDER BY p.id
+    </select>
+
+</mapper>
