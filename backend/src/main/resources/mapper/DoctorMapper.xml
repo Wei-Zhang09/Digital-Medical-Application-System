@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qst.medical.mapper.DoctorMapper">
+
+    <select id="selectDoctor" resultType="com.qst.medical.domain.entity.Doctor">
+        SELECT d.id, d.name, d.age, d.sex, d.level_id, d.phone, d.type_id, d.hospital,
+               d.account_id, d.createtime, d.updatetime,
+               l.name AS level_name,
+               t.name AS type_name,
+               a.uname AS uname
+        FROM doctor d
+                 LEFT JOIN doctor_level l ON l.id = d.level_id
+                 LEFT JOIN treat_type t ON t.id = d.type_id
+                 LEFT JOIN account a ON a.id = d.account_id
+        <where>
+            <if test="name != null and name != ''">
+                AND d.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        ORDER BY d.id DESC
+    </select>
+
+    <select id="selectById" resultType="com.qst.medical.domain.entity.Doctor">
+        SELECT id, name, age, sex, level_id, phone, type_id, hospital, account_id, createtime, updatetime
+        FROM doctor WHERE id = #{id}
+    </select>
+
+    <insert id="insertDoctor" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO doctor (name, age, sex, level_id, phone, type_id, hospital, account_id, createtime, updatetime)
+        VALUES (#{name}, #{age}, #{sex}, #{levelId}, #{phone}, #{typeId}, #{hospital}, #{accountId}, #{createtime}, #{updatetime})
+    </insert>
+
+    <update id="updateDoctor">
+        UPDATE doctor
+        SET name       = #{name},
+            age        = #{age},
+            sex        = #{sex},
+            level_id   = #{levelId},
+            phone      = #{phone},
+            type_id    = #{typeId},
+            hospital   = #{hospital},
+            updatetime = #{updatetime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM doctor WHERE id = #{id}
+    </delete>
+
+</mapper>

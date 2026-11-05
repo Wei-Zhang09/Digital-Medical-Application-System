@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qst.medical.mapper.CityMapper">
+
+    <select id="selectCity" resultType="com.qst.medical.domain.entity.City">
+        SELECT city_id, city_number, createtime, updatetime
+        FROM city
+        <where>
+            <if test="cityNumber != null">
+                AND city_number = #{cityNumber}
+            </if>
+        </where>
+        ORDER BY city_id DESC
+    </select>
+
+    <select id="selectAllCity" resultType="com.qst.medical.domain.entity.City">
+        SELECT city_id, city_number, createtime, updatetime
+        FROM city
+        ORDER BY city_id
+    </select>
+
+    <select id="selectById" resultType="com.qst.medical.domain.entity.City">
+        SELECT city_id, city_number, createtime, updatetime
+        FROM city
+        WHERE city_id = #{cityId}
+    </select>
+
+    <insert id="insertCity" useGeneratedKeys="true" keyProperty="cityId">
+        INSERT INTO city (city_number, createtime, updatetime)
+        VALUES (#{cityNumber}, #{createtime}, #{updatetime})
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM city WHERE city_id = #{cityId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qst.medical.mapper.CompanyPolicyMapper">
+
+    <select id="selectCompanyPolicy" resultType="com.qst.medical.domain.entity.CompanyPolicy">
+        SELECT id, title, message, company_id, create_time, update_time
+        FROM company_policy
+        <where>
+            <if test="title != null and title != ''">
+                AND title LIKE CONCAT('%', #{title}, '%')
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+    <select id="selectById" resultType="com.qst.medical.domain.entity.CompanyPolicy">
+        SELECT id, title, message, company_id, create_time, update_time
+        FROM company_policy WHERE id = #{id}
+    </select>
+
+    <insert id="insertCompanyPolicy" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO company_policy (title, message, company_id, create_time, update_time)
+        VALUES (#{title}, #{message}, #{companyId}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="updateCompanyPolicy">
+        UPDATE company_policy
+        SET title       = #{title},
+            message     = #{message},
+            company_id  = #{companyId},
+            update_time = #{updateTime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM company_policy WHERE id = #{id}
+    </delete>
+
+</mapper>

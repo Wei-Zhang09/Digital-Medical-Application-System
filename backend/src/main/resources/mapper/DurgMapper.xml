@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 文件名沿用官方素材里的 DurgMapper.xml（拼写错误是原样的，别改） -->
+<mapper namespace="com.qst.medical.mapper.DrugMapper">
+
+    <select id="selectDrug" resultType="com.qst.medical.domain.entity.Drug">
+        SELECT d.drug_id, d.drug_name, d.drug_info, d.drug_effect, d.drug_img,
+               d.publisher, d.createtime, d.updatetime,
+               GROUP_CONCAT(s.sale_name ORDER BY s.sale_id SEPARATOR ',') AS sale_names
+        FROM drug d
+                 LEFT JOIN drug_sale ds ON ds.drug_id = d.drug_id
+                 LEFT JOIN sale s ON s.sale_id = ds.sale_id
+        <where>
+            <if test="name != null and name != ''">
+                AND d.drug_name LIKE CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        GROUP BY d.drug_id, d.drug_name, d.drug_info, d.drug_effect, d.drug_img,
+                 d.publisher, d.createtime, d.updatetime
+        ORDER BY d.drug_id DESC
+    </select>
+
+    <select id="selectById" resultType="com.qst.medical.domain.entity.Drug">
+        SELECT drug_id, drug_name, drug_info, drug_effect, drug_img, publisher, createtime, updatetime
+        FROM drug WHERE drug_id = #{drugId}
+    </select>
+
+    <select id="selectSaleIdsByDrugId" resultType="java.lang.Long">
+        SELECT sale_id FROM drug_sale WHERE drug_id = #{drugId}
+    </select>
+
+    <insert id="insertDrug" useGeneratedKeys="true" keyProperty="drugId">
+        INSERT INTO drug (drug_name, drug_info, drug_effect, drug_img, publisher, createtime, updatetime)
+        VALUES (#{drugName}, #{drugInfo}, #{drugEffect}, #{drugImg}, #{publisher}, #{createtime}, #{updatetime})
+    </insert>
+
+    <update id="updateDrug">
+        UPDATE drug
+        SET drug_name   = #{drugName},
+            drug_info   = #{drugInfo},
+            drug_effect = #{drugEffect},
+            drug_img    = #{drugImg},
+            updatetime  = #{updatetime}
+        WHERE drug_id = #{drugId}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM drug WHERE drug_id = #{drugId}
+    </delete>
+
+    <insert id="insertDrugSale">
+        INSERT INTO drug_sale (drug_id, sale_id) VALUES
+        <foreach collection="saleIds" item="saleId" separator=",">
+            (#{drugId}, #{saleId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteDrugSaleByDrugId">
+        DELETE FROM drug_sale WHERE drug_id = #{drugId}
+    </delete>
+
+</mapper>

@@ -1,11 +1,14 @@
 package com.qst.medical.mapper;
 
+import com.qst.medical.domain.dataobject.AccountDo;
 import com.qst.medical.domain.dto.AccountDto;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * 用户登录查询 mapper（对应 resources/mapper/AccountMapper.xml）。
+ * 用户 mapper：登录查询 + 医师模块需要的账号维护（新增、改资料、重置口令、删除）。
  */
+@Mapper
 public interface AccountMapper {
 
     /**
@@ -15,4 +18,19 @@ public interface AccountMapper {
      * @return 带角色信息的用户，查不到返回 null
      */
     AccountDto selectAccountByUname(@Param("uname") String uname);
+
+    /** 登录名是否已被占用 */
+    int countByUname(@Param("uname") String uname);
+
+    AccountDo selectById(@Param("id") Long id);
+
+    int insertAccount(AccountDo account);
+
+    /** 只更新姓名与手机号（医师资料变更时同步账号） */
+    int updateAccountBasic(AccountDo account);
+
+    /** 重置口令（传 BCrypt 密文） */
+    int updatePwd(@Param("id") Long id, @Param("pwd") String pwd);
+
+    int deleteById(@Param("id") Long id);
 }

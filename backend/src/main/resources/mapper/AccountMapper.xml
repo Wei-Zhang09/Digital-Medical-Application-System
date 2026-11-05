@@ -18,4 +18,34 @@
         WHERE uname = #{uname}
     </select>
 
+    <select id="countByUname" resultType="int">
+        SELECT COUNT(*) FROM account WHERE uname = #{uname}
+    </select>
+
+    <select id="selectById" resultType="com.qst.medical.domain.dataobject.AccountDo">
+        SELECT id, realname, uname, pwd, phonenumber, utype, utype AS role, createtime, updatetime
+        FROM account WHERE id = #{id}
+    </select>
+
+    <insert id="insertAccount" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO account (realname, uname, pwd, phonenumber, utype, createtime, updatetime)
+        VALUES (#{realname}, #{uname}, #{pwd}, #{phonenumber}, #{utype}, #{createtime}, #{updatetime})
+    </insert>
+
+    <update id="updateAccountBasic">
+        UPDATE account
+        SET realname    = #{realname},
+            phonenumber = #{phonenumber},
+            updatetime  = #{updatetime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updatePwd">
+        UPDATE account SET pwd = #{pwd}, updatetime = NOW() WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM account WHERE id = #{id}
+    </delete>
+
 </mapper>
