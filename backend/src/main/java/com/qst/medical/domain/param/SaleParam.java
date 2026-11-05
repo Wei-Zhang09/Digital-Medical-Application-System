@@ -20,4 +20,13 @@ public class SaleParam implements Serializable {
     @ApiModelProperty(value = "联系电话", required = true)
     @NotBlank(message = "联系电话不能为空")
     private String salePhone;
+
+    @ApiModelProperty("经度（地图落点）")
+    private Double lng;
+
+    @ApiModelProperty("纬度（地图落点）")
+    private Double lat;
+
+    @ApiModelProperty("门店地址")
+    private String address;
 }

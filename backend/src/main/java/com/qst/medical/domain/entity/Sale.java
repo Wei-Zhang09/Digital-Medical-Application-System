@@ -8,8 +8,7 @@ import java.time.LocalDateTime;
 /**
  * 销售地点（药店）实体，对应 bin_text.sale。
  *
- * <p>扩展功能「销售地点地图」会在本表加 lng / lat / address 三列（见 sql/sale_ext.sql），
- * 那三个字段在 Task 10 一起补，这里先保持基础字段。</p>
+ * <p>lng / lat / address 是扩展功能「销售地点地图」加的字段（见 sql/sale_ext.sql）。</p>
  */
 @Data
 public class Sale implements Serializable {
@@ -19,6 +18,12 @@ public class Sale implements Serializable {
     private Long saleId;
     private String saleName;
     private String salePhone;
+    /** 经度 */
+    private Double lng;
+    /** 纬度 */
+    private Double lat;
+    /** 门店地址 */
+    private String address;
     private LocalDateTime createtime;
     private LocalDateTime updatetime;
 }

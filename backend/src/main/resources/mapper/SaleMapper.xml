@@ -4,7 +4,7 @@
 <mapper namespace="com.qst.medical.mapper.SaleMapper">
 
     <select id="selectSale" resultType="com.qst.medical.domain.entity.Sale">
-        SELECT sale_id, sale_name, sale_phone, createtime, updatetime
+        SELECT sale_id, sale_name, sale_phone, lng, lat, address, createtime, updatetime
         FROM sale
         <where>
             <if test="name != null and name != ''">
@@ -15,24 +15,27 @@
     </select>
 
     <select id="selectAllSale" resultType="com.qst.medical.domain.entity.Sale">
-        SELECT sale_id, sale_name, sale_phone, createtime, updatetime
+        SELECT sale_id, sale_name, sale_phone, lng, lat, address, createtime, updatetime
         FROM sale ORDER BY sale_id
     </select>
 
     <select id="selectById" resultType="com.qst.medical.domain.entity.Sale">
-        SELECT sale_id, sale_name, sale_phone, createtime, updatetime
+        SELECT sale_id, sale_name, sale_phone, lng, lat, address, createtime, updatetime
         FROM sale WHERE sale_id = #{saleId}
     </select>
 
     <insert id="insertSale" useGeneratedKeys="true" keyProperty="saleId">
-        INSERT INTO sale (sale_name, sale_phone, createtime, updatetime)
-        VALUES (#{saleName}, #{salePhone}, #{createtime}, #{updatetime})
+        INSERT INTO sale (sale_name, sale_phone, lng, lat, address, createtime, updatetime)
+        VALUES (#{saleName}, #{salePhone}, #{lng}, #{lat}, #{address}, #{createtime}, #{updatetime})
     </insert>
 
     <update id="updateSale">
         UPDATE sale
         SET sale_name  = #{saleName},
             sale_phone = #{salePhone},
+            lng        = #{lng},
+            lat        = #{lat},
+            address    = #{address},
             updatetime = #{updatetime}
         WHERE sale_id = #{saleId}
     </update>

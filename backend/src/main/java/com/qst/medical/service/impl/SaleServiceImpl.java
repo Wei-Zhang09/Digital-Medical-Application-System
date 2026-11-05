@@ -37,6 +37,9 @@ public class SaleServiceImpl implements SaleService {
         Sale sale = new Sale();
         sale.setSaleName(param.getSaleName().trim());
         sale.setSalePhone(param.getSalePhone().trim());
+        sale.setLng(param.getLng());
+        sale.setLat(param.getLat());
+        sale.setAddress(param.getAddress());
         LocalDateTime now = LocalDateTime.now();
         sale.setCreatetime(now);
         sale.setUpdatetime(now);
@@ -52,6 +55,9 @@ public class SaleServiceImpl implements SaleService {
         }
         sale.setSaleName(param.getSaleName().trim());
         sale.setSalePhone(param.getSalePhone().trim());
+        sale.setLng(param.getLng());
+        sale.setLat(param.getLat());
+        sale.setAddress(param.getAddress());
         sale.setUpdatetime(LocalDateTime.now());
         saleMapper.updateSale(sale);
     }
