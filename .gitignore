@@ -25,3 +25,5 @@ Thumbs.db
 
 # 报告 PDF 预览（体积大，推不上去；由 docx 导出生成）
 docs/report/*.pdf
+# 报告 docx 是生成物（scripts/export_report.py 可随时重建），体积大且推送易超时，不进版本库
+docs/report/*.docx
