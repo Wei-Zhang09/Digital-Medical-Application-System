@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qst.medical.mapper.DashboardMapper">
+
+    <select id="countDoctor" resultType="long">
+        SELECT COUNT(*) FROM doctor
+    </select>
+
+    <select id="countCompany" resultType="long">
+        SELECT COUNT(*) FROM drugcompany
+    </select>
+
+    <select id="countDrug" resultType="long">
+        SELECT COUNT(*) FROM drug
+    </select>
+
+    <select id="countSale" resultType="long">
+        SELECT COUNT(*) FROM sale
+    </select>
+
+    <select id="countByLevel" resultType="com.qst.medical.domain.model.ChartItemModel">
+        SELECT IFNULL(l.name, '未定级') AS name, COUNT(*) AS value
+        FROM doctor d
+                 LEFT JOIN doctor_level l ON l.id = d.level_id
+        GROUP BY l.id, l.name
+        ORDER BY value DESC
+    </select>
+
+    <select id="countByType" resultType="com.qst.medical.domain.model.ChartItemModel">
+        SELECT IFNULL(t.name, '未分科') AS name, COUNT(*) AS value
+        FROM doctor d
+                 LEFT JOIN treat_type t ON t.id = d.type_id
+        GROUP BY t.id, t.name
+        ORDER BY value DESC
+    </select>
+
+    <!-- 三张内容表合并后按时间倒序取前 N 条 -->
+    <select id="selectLatestNews" resultType="com.qst.medical.domain.model.DashboardModel$NewsItemModel">
+        SELECT title, time, source FROM (
+            SELECT title, DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS time, '医保政策' AS source
+            FROM medical_policy
+            UNION ALL
+            SELECT title, DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS time, '公司政策' AS source
+            FROM company_policy
+            UNION ALL
+            SELECT title, DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS time, '必备材料' AS source
+            FROM material
+        ) t
+        ORDER BY time DESC
+        LIMIT #{limit}
+    </select>
+
+</mapper>
