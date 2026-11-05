@@ -38,7 +38,7 @@
 ## 当前状态（2026-11-05）
 
 - 计划：`.hermes/plans/2026-11-05_172117-huiyi-medical-dev.md`（14 个任务、7 天排期、DoD）
-- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T7 已完成，T8 被 block（防守护进程抢活），T9–T14 排队
+- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T8 已完成，T9 被 block（防守护进程抢活），T10–T14 排队
 - **远端仓库已建并推送**：`https://github.com/Wei-Zhang09/Digital-Medical-Application-System`（分支 `main`，HEAD `6917ea5`，GitHub API 可见 90 个文件）
 - **T1 完成**：Maven 用 `mvn.cmd` 正常（3.9.11 + Java 17）；MySQL 3307 实例已初始化；Node 22.13 就位
 - **T2 完成**：`bin_text` 17 张表、16 账号、drug=6、permission=11、role_permission=18；口令已统一为 BCrypt(123456)
@@ -49,6 +49,10 @@
 - **前端组件库**：Element UI **2.15.14**（`^2.4.5` 解析到 Vue2 最后一版）。Element Plus 只支持 Vue 3，本项目锁定 Vue 2.6.11，不换库
 - **T7 完成并端到端实测**（puppeteer 连真实 Chrome，`scripts/e2e/login.js`）：管理员 9 菜单 / 医师 5 菜单（管理→查询）/ 点菜单路由跳转 / 退出回登录页 / 刷新后菜单保持 / 无页面错误。截图在 `docs/report/screenshots/`
 - **T7 修掉的两个真问题**：① 导航守卫 `next({...to})` 重进导致 `router.replace` 抛 redirected，dev 环境红屏 → 加 `.catch(() => {})`；② 侧栏 220px 时「医药公司政策管理」被截断 → 改 240px + 字号 13px
+- **T8 完成并页面级实测**（`scripts/e2e/pages.js`）：9 页全部出数据；材料走完增改删；药品编辑弹窗回填关联药店；医师视角无编辑按钮；无页面错误。截图 `docs/report/screenshots/pages/`
+- **T8 修掉的三个真问题**：① `LocalDateTime` 输出带 `T` 且表格折行 → 改用 `Jackson2ObjectMapperBuilderCustomizer`（自己 new ObjectMapper 不生效，Boot 的自动配置抢先）；② 种子药品图 404 → `backend/seed-images/` + `scripts/seed-images.sh` 拷进运行目录 `uploads/`；③ `404.vue` 数字开头文件名让 vue-loader 样式注入告警 → 改名 `NotFound.vue`
+- **工具链实况（与官方文档的偏差，报告要按实写）**：`@vue/cli-service 5.0.9` + `webpack 5.112` + `vue 2.6.14` + `element-ui 2.15.14`。官方文档写 Vue 2.6.11 / Element UI 2.4.5，实际因 Node 22 下 vue-cli 4 + webpack 4 需要 `--openssl-legacy-provider`，改用 cli 5（webpack 5）跑得更干净；Vue 仍是 2.6 系列，组件库仍是 Element UI（Vue 2 版）
+- **已知无害告警**：`npm run build` 会输出十余条 `export 'default' was not found in ...style&scoped`（css-loader 6 与 vue-loader 15 的 ESM 差异），样式实际生效，构建产物正常
 - 代码：`backend/`、`frontend/`、`sql/`、`scripts/`、`docs/`
 
 ### T4 落地时与计划的偏差（后续任务按此对齐）
