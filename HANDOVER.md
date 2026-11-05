@@ -38,7 +38,7 @@
 ## 当前状态（2026-11-05）
 
 - 计划：`.hermes/plans/2026-11-05_172117-huiyi-medical-dev.md`（14 个任务、7 天排期、DoD）
-- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T10 已完成，T11 被 block（防守护进程抢活），T12–T14 排队
+- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T11 已完成，T12 被 block（防守护进程抢活），T13–T14 排队
 - **远端仓库已建并推送**：`https://github.com/Wei-Zhang09/Digital-Medical-Application-System`（分支 `main`，HEAD `6917ea5`，GitHub API 可见 90 个文件）
 - **T1 完成**：Maven 用 `mvn.cmd` 正常（3.9.11 + Java 17）；MySQL 3307 实例已初始化；Node 22.13 就位
 - **T2 完成**：`bin_text` 17 张表、16 账号、drug=6、permission=11、role_permission=18；口令已统一为 BCrypt(123456)
@@ -56,6 +56,10 @@
 - **T9 完成并实测**（`scripts/e2e/dashboard.js`）：四个计数（医师12/公司4/药品6/药店18）、职称柱状图（主任6/普通4/实习2）、科室饼图（踝4/肩4/膝3/腰1）、资讯 5 条；ECharts 两张 canvas 正常渲染；admin 与医师数据一致；未登录 10006。截图 `docs/report/screenshots/dashboard/`
 - **T10 完成并实测**（`scripts/e2e/map.js`）：`sql/sale_ext.sql` 幂等补 `lng/lat/address` 并造 18 个青岛坐标；前端地图开关、18 个标记、点标记改药店、选点模式地图点击落点 + 逆地理编码出地址；高德 JS API 2.0 + 安全密钥无 `INVALID_USER_SCODE`。截图 `docs/report/screenshots/map/`
 - **高德凭据**：Key `caae559398c46473dd76566b9ae31f76`、安全密钥 `332b997576ca6ab8b280b2a106b782af`，都写在 `frontend/src/utils/amap.js`（JS API 的密钥本就暴露在前端，靠控制台域名白名单兜底）
+- **T11 完成并验收五下全过**（`scripts/e2e/deploy.js`）：Nginx 1.20.1 装在 `.dev/nginx/`，80 端口托管 dist 并反代 `/api/`、`/image/`；`bash scripts/deploy.sh` 一键构建+部署+启动，`stop` 停止
+- **T11 修掉的真问题**：`location /image/` 被后面的静态资源正则 `~* \.(png|jpg|...)$` 抢走，图片全 404（接口测试全绿也发现不了，只有真机看图才暴露）→ 前缀加 `^~`
+- **baseURL 不再手工改**：`.env.development`（直连 8080）/ `.env.production`（`/api` 同源）分离，`request.js` 与药品图片前缀都读环境变量；种子图地址用 `sql/image_url_relative.sql` 改成相对路径 `/image/`
+- **部署入口**：`http://127.0.0.1/#/user/login`，文档 `docs/report/部署说明.md`
 - 代码：`backend/`、`frontend/`、`sql/`、`scripts/`、`docs/`
 
 ### T4 落地时与计划的偏差（后续任务按此对齐）
