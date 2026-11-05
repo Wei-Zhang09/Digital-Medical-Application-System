@@ -38,7 +38,7 @@
 ## 当前状态（2026-11-05）
 
 - 计划：`.hermes/plans/2026-11-05_172117-huiyi-medical-dev.md`（14 个任务、7 天排期、DoD）
-- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T6 已完成，T7 被 block（防守护进程抢活），T8–T14 排队
+- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T7 已完成，T8 被 block（防守护进程抢活），T9–T14 排队
 - **远端仓库已建并推送**：`https://github.com/Wei-Zhang09/Digital-Medical-Application-System`（分支 `main`，HEAD `6917ea5`，GitHub API 可见 90 个文件）
 - **T1 完成**：Maven 用 `mvn.cmd` 正常（3.9.11 + Java 17）；MySQL 3307 实例已初始化；Node 22.13 就位
 - **T2 完成**：`bin_text` 17 张表、16 账号、drug=6、permission=11、role_permission=18；口令已统一为 BCrypt(123456)
@@ -47,6 +47,8 @@
 - **T5 完成并实测**：`/api/permissions` 菜单树，管理员 Layout 下 9 项、医师 5 项（「管理」→「查询」），无 token/伪造 token → 10006
 - **T6 完成并实测**：8 个模块 CRUD + `/api/upload` + `/image/**`；41 项用例全通过（分页、关键字、关联校验、参数校验、角色越权、上传与非法扩展名）。接口文档 `docs/report/接口清单.md`
 - **前端组件库**：Element UI **2.15.14**（`^2.4.5` 解析到 Vue2 最后一版）。Element Plus 只支持 Vue 3，本项目锁定 Vue 2.6.11，不换库
+- **T7 完成并端到端实测**（puppeteer 连真实 Chrome，`scripts/e2e/login.js`）：管理员 9 菜单 / 医师 5 菜单（管理→查询）/ 点菜单路由跳转 / 退出回登录页 / 刷新后菜单保持 / 无页面错误。截图在 `docs/report/screenshots/`
+- **T7 修掉的两个真问题**：① 导航守卫 `next({...to})` 重进导致 `router.replace` 抛 redirected，dev 环境红屏 → 加 `.catch(() => {})`；② 侧栏 220px 时「医药公司政策管理」被截断 → 改 240px + 字号 13px
 - 代码：`backend/`、`frontend/`、`sql/`、`scripts/`、`docs/`
 
 ### T4 落地时与计划的偏差（后续任务按此对齐）
