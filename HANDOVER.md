@@ -38,7 +38,7 @@
 ## 当前状态（2026-11-05）
 
 - 计划：`.hermes/plans/2026-11-05_172117-huiyi-medical-dev.md`（14 个任务、7 天排期、DoD）
-- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T12 已完成，T13 被 block（防守护进程抢活），T14 排队
+- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T13 已完成，T14 被 block（防守护进程抢活）
 - **远端仓库已建并推送**：`https://github.com/Wei-Zhang09/Digital-Medical-Application-System`（分支 `main`，HEAD `6917ea5`，GitHub API 可见 90 个文件）
 - **T1 完成**：Maven 用 `mvn.cmd` 正常（3.9.11 + Java 17）；MySQL 3307 实例已初始化；Node 22.13 就位
 - **T2 完成**：`bin_text` 17 张表、16 账号、drug=6、permission=11、role_permission=18；口令已统一为 BCrypt(123456)
@@ -62,6 +62,9 @@
 - **部署入口**：`http://127.0.0.1/#/user/login`，文档 `docs/report/部署说明.md`
 - **T12 完成**：单元测试 17 条（`mvn test` 全绿）、接口功能用例 35 条（`scripts/e2e/functional.py` 实跑 35/35）、界面 E2E 四组全 PASS；产出 `docs/report/测试用例.md`、`测试执行记录.md`（含 7 条缺陷与回归）、`postman-collection.json`
 - **T12 修掉 BUG-06**：`JwtUtil.resolveToken` 原本对非 Bearer 前缀原样返回，改为只认 `Bearer `
+- **T13 完成**：`docs/report/chapters/01~09.md` 九章成文 → `scripts/export_report.py` 转 docx（46 页 / 53 表 / 7 图，Word 打开自动生成目录，实测 TOC 1299 字含页码），另有同名 PDF 预览
+- **T13 的 Word 坑（下次直接照做）**：① 页脚页码必须用带缓存结果的 `w:fldSimple`（空 fldSimple 会让 Word 空转、导出 PDF 卡死；三个 fldChar 塞同一 run 会被判「文档损坏」）；② `w:updateFields` 要插在 `w:defaultTabStop` 之类元素之前，append 到末尾违反 schema；③ 打开与导出都走 `%TEMP%` 纯英文路径，中文路径会卡住；④ PowerShell 脚本必须存成 UTF-8 **带 BOM**，否则中文被按 ANSI 解析报语法错误
+- **大文件推送**：docx（707KB）与 PDF（5.4MB）走代理推 GitHub 会 408，已改为生成物不进版本库（`.gitignore`），用 `python scripts/export_report.py` 随时重建
 - 代码：`backend/`、`frontend/`、`sql/`、`scripts/`、`docs/`
 
 ### T4 落地时与计划的偏差（后续任务按此对齐）
