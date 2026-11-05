@@ -52,7 +52,7 @@ nohup java -jar "$PROJ_ROOT/backend/target/medicai-1.0-SNAPSHOT.jar" > "$PROJ_RO
 echo "等待后端启动..."
 for i in $(seq 1 40); do
   sleep 2
-  if curl -s -o /dev/null --max-time 3 -X POST "http://127.0.0.1/api/login" -d "username=admin_1&password=123456"; then
+  if curl -s -f --max-time 3 -X POST "http://127.0.0.1/api/login" -d "username=admin_1&password=123456" > /dev/null; then
     echo "部署完成：http://127.0.0.1/#/user/login"
     echo "  管理员 admin_1 / 123456 ；医师 王小明4125 / 123456"
     exit 0
