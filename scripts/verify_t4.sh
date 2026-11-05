@@ -6,6 +6,7 @@ OUT="$PROJ/.dev/verify-t4.txt"
 LOG="$PROJ/.dev/app-verify.log"
 TMP="$PROJ/.dev/tmp-t4"
 TMPW="D:/HermesWorkSpace/Digital Medical Application System/.dev/tmp-t4"
+PROJW="D:/HermesWorkSpace/Digital Medical Application System"
 mkdir -p "$TMP"
 : > "$OUT"
 
@@ -94,7 +95,15 @@ echo "" >> "$OUT"
 
 # 9) token 载荷
 echo "== 9) token 载荷解析 ==" >> "$OUT"
-python3 "$PROJ/scripts/verify_t4_jwt.py" "$TOKEN" >> "$OUT" 2>&1
+python3 "$PROJW/scripts/verify_t4_jwt.py" "$TOKEN" >> "$OUT" 2>&1
+echo "" >> "$OUT"
+
+# 9b) 过期 token
+echo "== 9b) 过期 token 访问受保护路径 ==" >> "$OUT"
+EXPIRED=$(python3 "$PROJW/scripts/make_expired_jwt.py")
+c=$(curl.exe --max-time 10 -s -o "$TMPW/expired.json" -w "%{http_code}" -H "Authorization: Bearer $EXPIRED" "$BASE/api/permissions")
+echo "http=$c" >> "$OUT"
+cat "$TMP/expired.json" >> "$OUT"; echo "" >> "$OUT"
 echo "" >> "$OUT"
 
 # 10) 应用日志里的异常

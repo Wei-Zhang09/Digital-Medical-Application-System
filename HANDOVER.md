@@ -38,17 +38,19 @@
 ## 当前状态（2026-11-05）
 
 - 计划：`.hermes/plans/2026-11-05_172117-huiyi-medical-dev.md`（14 个任务、7 天排期、DoD）
-- 看板：`hermes kanban --board huiyi-medical ls` —— T1/T2 已完成，T3 进行中，T4–T14 排队
+- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T4 已完成，T5 被 block（防守护进程抢活），T6–T14 排队
+- **远端仓库已建并推送**：`https://github.com/Wei-Zhang09/Digital-Medical-Application-System`（分支 `main`，HEAD `6917ea5`，GitHub API 可见 90 个文件）
 - **T1 完成**：Maven 用 `mvn.cmd` 正常（3.9.11 + Java 17）；MySQL 3307 实例已初始化；Node 22.13 就位
-- **T2 完成**：`bin_text` 17 张表、16 账号、drug=6、permission=11、role_permission=18；`sql/reset_pwd.sql` 已把 admin_1 与全部 ROLE_2 口令重置为 BCrypt(123456)
-- **T3 进行中**：后端骨架可跑——`mvn clean package` 产出 `medicai-1.0-SNAPSHOT.jar`，`java -jar` 启动成功（Spring Boot 2.5.3，5.37s，Druid 连库成功，Swagger 已映射；此时全站 401 属正常，T4 加 WebSecurityConfig 后放行）。前端骨架文件已写（package.json / vue.config.js / main.js / router / store / Login 占位 / amap.js，assets+style 已合入），`npm install` 在跑
+- **T2 完成**：`bin_text` 17 张表、16 账号、drug=6、permission=11、role_permission=18；口令已统一为 BCrypt(123456)
+- **T3 完成**：后端 jar 可构建可启动；前端 serve 5s 编译、build 出 dist
+- **T4 完成并实测**：`Msg`(20000/10000/10006)、`PageBean`、Account 四层实体、`JwtUtil`/`JwtFilter`、四个 Handler、`WebSecurityConfig`（放行 login/swagger/image、STATELESS、CORS、`@EnableGlobalMethodSecurity`）。实测：admin_1 → 20000/utype=1；王小明4125（UTF-8 提交）→ 20000/utype=2；错口令 → 10000；无 token → 10006
 - 代码：`backend/`、`frontend/`、`sql/`、`scripts/`、`docs/`
 
 ## 下一步
 
-1. 等 `npm install` 完 → `npm run serve` 起 9092 验证骨架 → T3 收尾
-2. T4 公共层 + JWT + Spring Security（后端第一个真功能）
-3. T5 菜单权限树 → T6 八个模块 CRUD
+1. T5 菜单权限树 `/api/permissions`（管理员 9 项 / 医师 5 项）
+2. T6 八个模块 CRUD + 药品图片上传
+3. T7 前端请求层 + 登录 + 动态路由
 
 ## 待办/待确认
 
