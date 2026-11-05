@@ -38,7 +38,7 @@
 ## 当前状态（2026-11-05）
 
 - 计划：`.hermes/plans/2026-11-05_172117-huiyi-medical-dev.md`（14 个任务、7 天排期、DoD）
-- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T11 已完成，T12 被 block（防守护进程抢活），T13–T14 排队
+- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T12 已完成，T13 被 block（防守护进程抢活），T14 排队
 - **远端仓库已建并推送**：`https://github.com/Wei-Zhang09/Digital-Medical-Application-System`（分支 `main`，HEAD `6917ea5`，GitHub API 可见 90 个文件）
 - **T1 完成**：Maven 用 `mvn.cmd` 正常（3.9.11 + Java 17）；MySQL 3307 实例已初始化；Node 22.13 就位
 - **T2 完成**：`bin_text` 17 张表、16 账号、drug=6、permission=11、role_permission=18；口令已统一为 BCrypt(123456)
@@ -60,6 +60,8 @@
 - **T11 修掉的真问题**：`location /image/` 被后面的静态资源正则 `~* \.(png|jpg|...)$` 抢走，图片全 404（接口测试全绿也发现不了，只有真机看图才暴露）→ 前缀加 `^~`
 - **baseURL 不再手工改**：`.env.development`（直连 8080）/ `.env.production`（`/api` 同源）分离，`request.js` 与药品图片前缀都读环境变量；种子图地址用 `sql/image_url_relative.sql` 改成相对路径 `/image/`
 - **部署入口**：`http://127.0.0.1/#/user/login`，文档 `docs/report/部署说明.md`
+- **T12 完成**：单元测试 17 条（`mvn test` 全绿）、接口功能用例 35 条（`scripts/e2e/functional.py` 实跑 35/35）、界面 E2E 四组全 PASS；产出 `docs/report/测试用例.md`、`测试执行记录.md`（含 7 条缺陷与回归）、`postman-collection.json`
+- **T12 修掉 BUG-06**：`JwtUtil.resolveToken` 原本对非 Bearer 前缀原样返回，改为只认 `Bearer `
 - 代码：`backend/`、`frontend/`、`sql/`、`scripts/`、`docs/`
 
 ### T4 落地时与计划的偏差（后续任务按此对齐）
