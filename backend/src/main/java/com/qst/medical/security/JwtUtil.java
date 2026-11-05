@@ -73,12 +73,21 @@ public class JwtUtil {
         }
     }
 
-    /** 从请求头值里剥掉 Bearer 前缀 */
+    /**
+     * 从请求头值里剥掉 Bearer 前缀。
+     *
+     * <p>只认 {@code Bearer <token>}：其它认证方案（Basic 等）或裸 token 一律返回 null，
+     * 避免把别的凭据当 JWT 去解析。前端 request.js 统一发 Bearer。</p>
+     */
     public static String resolveToken(String header) {
         if (!StringUtils.hasText(header)) {
             return null;
         }
-        return header.startsWith(TOKEN_PREFIX) ? header.substring(TOKEN_PREFIX.length()).trim() : header.trim();
+        if (!header.startsWith(TOKEN_PREFIX)) {
+            return null;
+        }
+        String token = header.substring(TOKEN_PREFIX.length()).trim();
+        return StringUtils.hasText(token) ? token : null;
     }
 
     /** claim 里的 id 反序列化后可能是 Integer，统一取 long */
