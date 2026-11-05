@@ -52,8 +52,13 @@
 
 ## 待办/待确认
 
-- Git 提交身份（本仓库已 `git init` 并 `git add`，还没 commit，等你给 user.name / user.email；其他仓库用过 zhang_we / 2767201026@qq.com 与 Wei-Zhang09）
 - 高德 Key 是否绑定「安全密钥」（D5 用地图时才知道）
+- 远端仓库：`https://github.com/Wei-Zhang09/Digital-Medical-Application-System.git`（已确认存在且为空）
+
+## 踩坑记录（重要）
+
+- **看板守护进程会抢活**：`huiyi-medical` 看板的卡片一旦 ready，后台 dispatcher（60s 一轮）就会自动 spawn worker 去执行，而且它会直接写项目目录——T3 期间它创建了 jsconfig.json / favicon.ico / .gitkeep，还删掉了 `src/assets/logo.png`、`user.png`、`icon/icon.css`（已从 zip 补回）。**手工执行时：先 `hermes kanban claim <id>` 抢占，或把后续卡片 block 掉，完成一张再放开下一张。**
+- 素材 zip 里有 3 个文件名在中央目录就已损坏（GBK 字节被当 cp437，`U+FFFD` 不可逆）：现以 `src/assets/legacy-01..03.png` 保存，内容完好，当前页面未引用。
 
 ## 环境副作用（本次会话造成，可还原）
 
