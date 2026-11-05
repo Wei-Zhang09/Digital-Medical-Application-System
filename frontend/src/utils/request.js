@@ -6,11 +6,12 @@ import store from '../store'
 /**
  * axios 实例。
  *
- * - 开发态直连后端 8080（部署时把 baseURL 改成 "/api"，由 Nginx 反代）
+ * - baseURL 来自环境变量：开发态 .env.development 指向 8080，
+ *   生产态 .env.production 用 "/api" 交给 Nginx 反代（不用改代码，避免改完忘记改回）
  * - 请求拦截：自动带上 Authorization: Bearer <token>
  * - 响应拦截：统一判断 code；10006（未登录/token 失效）清本地状态回登录页
  */
-export const BASE_URL = 'http://localhost:8080/api'
+export const BASE_URL = process.env.VUE_APP_API_BASE || 'http://localhost:8080/api'
 
 const service = axios.create({
   baseURL: BASE_URL,

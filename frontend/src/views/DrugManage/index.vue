@@ -125,8 +125,11 @@ import {
 } from '../../api/admin/drugInfoManage'
 import { getAllSale } from '../../api/admin/saleManage'
 
-/** 后端返回的图片地址是 /image/xxx，前端在 9092，需要补上后端地址 */
-const BACKEND = 'http://localhost:8080'
+/**
+ * 图片地址：库里存的是相对路径 /image/xxx。
+ * 开发态（9092）需要拼上后端 8080；生产态由 Nginx 反代 /image/，前缀为空。
+ */
+const IMAGE_BASE = process.env.VUE_APP_IMAGE_BASE || ''
 
 export default {
   name: 'DrugManage',
@@ -149,7 +152,7 @@ export default {
   methods: {
     imageUrl (path) {
       if (!path) return ''
-      return path.startsWith('/image/') ? BACKEND + path : path
+      return path.startsWith('/image/') ? IMAGE_BASE + path : path
     },
     loadSales () {
       getAllSale().then(res => { this.sales = res.data.sales || [] }).catch(() => {})
