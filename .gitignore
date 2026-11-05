@@ -30,3 +30,5 @@ docs/report/*.docx
 
 # 交接文档只留本地（含环境细节与密钥），不进仓库
 HANDOVER.md
+# 交付压缩包（16MB，推送超时；用 scripts/package.sh 重建）
+docs/report/*.zip
