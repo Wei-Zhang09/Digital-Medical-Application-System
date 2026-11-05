@@ -1,0 +1,24 @@
+# 构建产物
+backend/target/
+frontend/dist/
+frontend/node_modules/
+frontend/.eslintcache
+frontend/npm-debug.log*
+
+# 本机开发环境（Node 22、MySQL 数据目录、临时文件、日志）
+.dev/
+
+# 上传的图片
+uploads/
+backend/uploads/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.history/
+
+# 系统
+Thumbs.db
+.DS_Store
+*.log
