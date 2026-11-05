@@ -1,5 +1,5 @@
 import Layout from '../layout/index.vue'
-import NotFound from '../views/error/404.vue'
+import NotFound from '../views/error/NotFound.vue'
 
 /**
  * 把后端 /api/permissions 返回的菜单树翻译成 vue-router 路由。
