@@ -22,3 +22,6 @@ backend/uploads/
 Thumbs.db
 .DS_Store
 *.log
+
+# 报告 PDF 预览（体积大，推不上去；由 docx 导出生成）
+docs/report/*.pdf
