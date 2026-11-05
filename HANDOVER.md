@@ -38,7 +38,7 @@
 ## 当前状态（2026-11-05）
 
 - 计划：`.hermes/plans/2026-11-05_172117-huiyi-medical-dev.md`（14 个任务、7 天排期、DoD）
-- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T9 已完成，T10 被 block（防守护进程抢活），T11–T14 排队
+- 看板：`hermes kanban --board huiyi-medical ls` —— T1–T10 已完成，T11 被 block（防守护进程抢活），T12–T14 排队
 - **远端仓库已建并推送**：`https://github.com/Wei-Zhang09/Digital-Medical-Application-System`（分支 `main`，HEAD `6917ea5`，GitHub API 可见 90 个文件）
 - **T1 完成**：Maven 用 `mvn.cmd` 正常（3.9.11 + Java 17）；MySQL 3307 实例已初始化；Node 22.13 就位
 - **T2 完成**：`bin_text` 17 张表、16 账号、drug=6、permission=11、role_permission=18；口令已统一为 BCrypt(123456)
@@ -54,6 +54,8 @@
 - **工具链实况（与官方文档的偏差，报告要按实写）**：`@vue/cli-service 5.0.9` + `webpack 5.112` + `vue 2.6.14` + `element-ui 2.15.14`。官方文档写 Vue 2.6.11 / Element UI 2.4.5，实际因 Node 22 下 vue-cli 4 + webpack 4 需要 `--openssl-legacy-provider`，改用 cli 5（webpack 5）跑得更干净；Vue 仍是 2.6 系列，组件库仍是 Element UI（Vue 2 版）
 - **已知无害告警**：`npm run build` 会输出十余条 `export 'default' was not found in ...style&scoped`（css-loader 6 与 vue-loader 15 的 ESM 差异），样式实际生效，构建产物正常
 - **T9 完成并实测**（`scripts/e2e/dashboard.js`）：四个计数（医师12/公司4/药品6/药店18）、职称柱状图（主任6/普通4/实习2）、科室饼图（踝4/肩4/膝3/腰1）、资讯 5 条；ECharts 两张 canvas 正常渲染；admin 与医师数据一致；未登录 10006。截图 `docs/report/screenshots/dashboard/`
+- **T10 完成并实测**（`scripts/e2e/map.js`）：`sql/sale_ext.sql` 幂等补 `lng/lat/address` 并造 18 个青岛坐标；前端地图开关、18 个标记、点标记改药店、选点模式地图点击落点 + 逆地理编码出地址；高德 JS API 2.0 + 安全密钥无 `INVALID_USER_SCODE`。截图 `docs/report/screenshots/map/`
+- **高德凭据**：Key `caae559398c46473dd76566b9ae31f76`、安全密钥 `332b997576ca6ab8b280b2a106b782af`，都写在 `frontend/src/utils/amap.js`（JS API 的密钥本就暴露在前端，靠控制台域名白名单兜底）
 - 代码：`backend/`、`frontend/`、`sql/`、`scripts/`、`docs/`
 
 ### T4 落地时与计划的偏差（后续任务按此对齐）
