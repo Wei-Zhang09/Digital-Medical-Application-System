@@ -17,12 +17,14 @@ case "${1:-start}" in
   start)
     if is_up; then echo "MySQL 已在 $PORT 运行"; exit 0; fi
     mkdir -p "$PROJ_ROOT/.dev/logs"
-    "$MYSQLD" --no-defaults \
-      --basedir="C:/Program Files/MySQL/MySQL Server 8.0" \
-      --datadir="$DATADIR" --port=$PORT --bind-address=127.0.0.1 \
-      --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci \
-      --lower-case-table-names=1 --log-error="$LOGFILE" --mysqlx=OFF \
-      --pid-file="$PIDFILE" >/dev/null 2>&1 &
+    # 用 PowerShell 的 Start-Process 启动：让 mysqld 完全脱离当前 shell 的进程树。
+    # 只加 nohup 不够——调用方（终端/脚本）结束时会把整个进程组带走，
+    # 现象是日志里明明写着 ready for connections，端口却马上又没了。
+    WIN_DATADIR="$(cygpath -w "$DATADIR")"
+    WIN_LOG="$(cygpath -w "$LOGFILE")"
+    WIN_PID="$(cygpath -w "$PIDFILE")"
+    powershell -NoProfile -Command "Start-Process -FilePath 'C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqld.exe' -ArgumentList @('--no-defaults','--basedir=C:\Program Files\MySQL\MySQL Server 8.0','--datadir=$WIN_DATADIR','--port=$PORT','--bind-address=127.0.0.1','--character-set-server=utf8mb4','--collation-server=utf8mb4_general_ci','--lower-case-table-names=1','--log-error=$WIN_LOG','--mysqlx=OFF','--pid-file=$WIN_PID') -WindowStyle Hidden" >/dev/null 2>&1
+
     for i in $(seq 1 30); do sleep 1; if is_up; then echo "MySQL 已启动：127.0.0.1:$PORT"; exit 0; fi; done
     echo "启动失败，看日志：$LOGFILE"; tail -20 "$LOGFILE"; exit 1
     ;;
