@@ -31,18 +31,18 @@
       <template v-if="!mapMode">
         <el-table :data="list" v-loading="loading" border stripe>
           <el-table-column prop="saleId" label="ID" width="90" align="center" />
-          <el-table-column prop="saleName" label="药店名称" width="240" show-overflow-tooltip />
-          <el-table-column prop="salePhone" label="联系电话" width="150" align="center" />
+          <el-table-column prop="saleName" label="药店名称" min-width="180" show-overflow-tooltip />
+          <el-table-column prop="salePhone" label="联系电话" min-width="130" align="center" />
           <el-table-column prop="address" label="地址" min-width="220" show-overflow-tooltip>
             <template slot-scope="{ row }">{{ row.address || '—' }}</template>
           </el-table-column>
-          <el-table-column label="经纬度" width="190" align="center">
+          <el-table-column label="经纬度" width="170" align="center">
             <template slot-scope="{ row }">
               <span v-if="row.lng && row.lat">{{ row.lng.toFixed(4) }}, {{ row.lat.toFixed(4) }}</span>
               <span v-else class="muted">未标注</span>
             </template>
           </el-table-column>
-          <el-table-column v-if="isAdmin" label="操作" width="140" align="center">
+          <el-table-column v-if="isAdmin" label="操作" width="150" fixed="right" align="center">
             <template slot-scope="{ row }">
               <el-button type="text" @click="openEdit(row)">编辑</el-button>
               <el-button type="text" class="danger" @click="handleDelete(row, row.saleName, deleteSale)">删除</el-button>

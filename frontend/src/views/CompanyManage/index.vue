@@ -19,10 +19,10 @@
 
       <el-table :data="list" v-loading="loading" border stripe>
         <el-table-column prop="companyId" label="公司ID" width="90" align="center" />
-        <el-table-column prop="companyName" label="公司名称" width="260" show-overflow-tooltip />
-        <el-table-column prop="companyPhone" label="联系电话" width="180" align="center" />
+        <el-table-column prop="companyName" label="公司名称" min-width="200" show-overflow-tooltip />
+        <el-table-column prop="companyPhone" label="联系电话" min-width="150" align="center" />
         <el-table-column prop="createtime" label="创建时间" align="center" />
-        <el-table-column v-if="isAdmin" label="操作" width="140" align="center">
+        <el-table-column v-if="isAdmin" label="操作" width="150" fixed="right" align="center">
           <template slot-scope="{ row }">
             <el-button type="text" @click="openEdit(row)">编辑</el-button>
             <el-button type="text" class="danger" @click="handleDelete(row, row.companyName, deleteCompany)">删除</el-button>

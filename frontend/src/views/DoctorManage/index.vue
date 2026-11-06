@@ -19,17 +19,17 @@
 
       <el-table :data="list" v-loading="loading" border stripe>
         <el-table-column prop="id" label="ID" width="70" align="center" />
-        <el-table-column prop="name" label="姓名" width="110" />
+        <el-table-column prop="name" label="姓名" min-width="100" />
         <el-table-column prop="age" label="年龄" width="70" align="center" />
         <el-table-column label="性别" width="70" align="center">
           <template slot-scope="{ row }">{{ row.sex === 1 ? '男' : '女' }}</template>
         </el-table-column>
-        <el-table-column prop="levelName" label="职称" width="110" align="center" />
-        <el-table-column prop="typeName" label="科室" width="110" align="center" />
-        <el-table-column prop="phone" label="联系电话" width="130" align="center" />
-        <el-table-column prop="hospital" label="所属医院" min-width="160" show-overflow-tooltip />
-        <el-table-column prop="uname" label="登录名" width="140" align="center" />
-        <el-table-column v-if="isAdmin" label="操作" width="200" align="center">
+        <el-table-column prop="levelName" label="职称" min-width="100" align="center" />
+        <el-table-column prop="typeName" label="科室" min-width="100" align="center" />
+        <el-table-column prop="phone" label="联系电话" min-width="120" align="center" />
+        <el-table-column prop="hospital" label="所属医院" min-width="140" show-overflow-tooltip />
+        <el-table-column prop="uname" label="登录名" min-width="120" align="center" />
+        <el-table-column v-if="isAdmin" label="操作" width="200" fixed="right" align="center">
           <template slot-scope="{ row }">
             <el-button type="text" @click="openEdit(row)">编辑</el-button>
             <el-button type="text" @click="handleResetPwd(row)">重置口令</el-button>

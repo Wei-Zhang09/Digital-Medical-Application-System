@@ -33,14 +33,14 @@
             <span v-else class="img-empty">无图</span>
           </template>
         </el-table-column>
-        <el-table-column prop="drugName" label="药名" width="160" show-overflow-tooltip />
+        <el-table-column prop="drugName" label="药名" min-width="140" show-overflow-tooltip />
         <el-table-column prop="drugInfo" label="药品成分" min-width="160" show-overflow-tooltip />
         <el-table-column prop="drugEffect" label="药品功能" min-width="180" show-overflow-tooltip />
         <el-table-column prop="saleNames" label="销售药店" min-width="160" show-overflow-tooltip>
           <template slot-scope="{ row }">{{ row.saleNames || '未关联' }}</template>
         </el-table-column>
-        <el-table-column prop="updatetime" label="更新时间" width="170" align="center" />
-        <el-table-column v-if="isAdmin" label="操作" width="140" align="center">
+        <el-table-column prop="updatetime" label="更新时间" width="160" align="center" />
+        <el-table-column v-if="isAdmin" label="操作" width="150" fixed="right" align="center">
           <template slot-scope="{ row }">
             <el-button type="text" @click="openEdit(row)">编辑</el-button>
             <el-button type="text" class="danger" @click="handleDelete(row, row.drugName, deleteDrug)">删除</el-button>

@@ -18,10 +18,10 @@
       </div>
 
       <el-table :data="list" v-loading="loading" border stripe>
-        <el-table-column prop="cityId" label="城市ID" width="120" align="center" />
-        <el-table-column prop="cityNumber" label="城市编号" width="140" align="center" />
+        <el-table-column prop="cityId" label="城市ID" width="110" align="center" />
+        <el-table-column prop="cityNumber" label="城市编号" width="130" align="center" />
         <el-table-column prop="createtime" label="创建时间" align="center" />
-        <el-table-column v-if="isAdmin" label="操作" width="120" align="center">
+        <el-table-column v-if="isAdmin" label="操作" width="120" fixed="right" align="center">
           <template slot-scope="{ row }">
             <el-button type="text" class="danger" @click="handleDelete(row, '城市 ' + row.cityNumber, deleteCity)">删除</el-button>
           </template>

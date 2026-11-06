@@ -76,7 +76,7 @@ async function main () {
     const [route, title] = PAGES[i]
     await page.evaluate(r => { location.hash = '#' + r }, route)
     await sleep(1600)
-    const rows = await page.$$eval('.el-table__body tbody tr', trs => trs.length).catch(() => 0)
+    const rows = await page.$$eval('.el-table__body-wrapper .el-table__body tbody tr', trs => trs.length).catch(() => 0)
     const heading = await page.evaluate(() => (document.querySelector('.page-title') || {}).innerText || '')
     await page.screenshot({ path: path.join(SHOT_DIR, String(i + 1).padStart(2, '0') + '-' + title + '.png') })
     const ok = heading === title
@@ -95,37 +95,41 @@ async function main () {
   await clickButton(page, '保存', '.el-dialog__wrapper:not([style*="display: none"])')
   await sleep(2000)
 
-  let titles = await page.$$eval('.el-table__body tbody tr', trs => trs.map(t => t.innerText))
+  let titles = await page.$$eval('.el-table__body-wrapper .el-table__body tbody tr', trs => trs.map(t => t.innerText))
   const added = titles.some(t => t.indexOf('T8-UI新增材料') >= 0)
   console.log(`${added ? 'PASS' : 'FAIL'}  材料新增后出现在列表`)
 
   // 修改：点该行的「编辑」
+  // 注意：操作列用了 fixed="right"，按钮只渲染在 .el-table__fixed-right 里，
+  // 主表格对应单元格是空的，所以先定位行号再去固定层点按钮
   await page.evaluate(() => {
-    const tr = [...document.querySelectorAll('.el-table__body tbody tr')]
-      .find(t => t.innerText.indexOf('T8-UI新增材料') >= 0)
-    const btn = [...tr.querySelectorAll('button')].find(b => b.innerText.indexOf('编辑') >= 0)
+    const rows = [...document.querySelectorAll('.el-table__body-wrapper .el-table__body tbody tr')]
+    const idx = rows.findIndex(t => t.innerText.indexOf('T8-UI新增材料') >= 0)
+    const fixedRows = [...document.querySelectorAll('.el-table__fixed-right .el-table__body tbody tr')]
+    const btn = [...fixedRows[idx].querySelectorAll('button')].find(b => b.innerText.indexOf('编辑') >= 0)
     btn.click()
   })
   await sleep(1200)
   await fill(page, '.el-dialog__wrapper:not([style*="display: none"]) input[maxlength="100"]', 'T8-UI材料(已改)')
   await clickButton(page, '保存', '.el-dialog__wrapper:not([style*="display: none"])')
   await sleep(2000)
-  titles = await page.$$eval('.el-table__body tbody tr', trs => trs.map(t => t.innerText))
+  titles = await page.$$eval('.el-table__body-wrapper .el-table__body tbody tr', trs => trs.map(t => t.innerText))
   const edited = titles.some(t => t.indexOf('T8-UI材料(已改)') >= 0)
   console.log(`${edited ? 'PASS' : 'FAIL'}  材料修改后列表已更新`)
   await page.screenshot({ path: path.join(SHOT_DIR, '10-材料增改后.png') })
 
   // 删除
   await page.evaluate(() => {
-    const tr = [...document.querySelectorAll('.el-table__body tbody tr')]
-      .find(t => t.innerText.indexOf('T8-UI材料(已改)') >= 0)
-    const btn = [...tr.querySelectorAll('button')].find(b => b.innerText.indexOf('删除') >= 0)
+    const rows = [...document.querySelectorAll('.el-table__body-wrapper .el-table__body tbody tr')]
+    const idx = rows.findIndex(t => t.innerText.indexOf('T8-UI材料(已改)') >= 0)
+    const fixedRows = [...document.querySelectorAll('.el-table__fixed-right .el-table__body tbody tr')]
+    const btn = [...fixedRows[idx].querySelectorAll('button')].find(b => b.innerText.indexOf('删除') >= 0)
     btn.click()
   })
   await sleep(700)
   await clickButton(page, '确定', '.el-message-box__btns')
   await sleep(2000)
-  titles = await page.$$eval('.el-table__body tbody tr', trs => trs.map(t => t.innerText))
+  titles = await page.$$eval('.el-table__body-wrapper .el-table__body tbody tr', trs => trs.map(t => t.innerText))
   const deleted = !titles.some(t => t.indexOf('T8-UI材料') >= 0)
   console.log(`${deleted ? 'PASS' : 'FAIL'}  材料删除后从列表消失`)
 
@@ -133,8 +137,8 @@ async function main () {
   await page.evaluate(() => { location.hash = '#/manage/drug' })
   await sleep(1800)
   await page.evaluate(() => {
-    const tr = document.querySelector('.el-table__body tbody tr')
-    const btn = [...tr.querySelectorAll('button')].find(b => b.innerText.indexOf('编辑') >= 0)
+    const fixedRow = document.querySelector('.el-table__fixed-right .el-table__body tbody tr')
+    const btn = [...fixedRow.querySelectorAll('button')].find(b => b.innerText.indexOf('编辑') >= 0)
     if (btn) btn.click()
   })
   await sleep(1500)

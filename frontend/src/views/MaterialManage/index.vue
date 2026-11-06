@@ -19,10 +19,10 @@
 
       <el-table :data="list" v-loading="loading" border stripe>
         <el-table-column prop="id" label="编号" width="80" align="center" />
-        <el-table-column prop="title" label="标题" width="220" show-overflow-tooltip />
+        <el-table-column prop="title" label="标题" min-width="200" show-overflow-tooltip />
         <el-table-column prop="message" label="内容" show-overflow-tooltip />
-        <el-table-column prop="updateTime" label="更新时间" width="170" align="center" />
-        <el-table-column v-if="isAdmin" label="操作" width="140" align="center">
+        <el-table-column prop="updateTime" label="更新时间" width="160" align="center" />
+        <el-table-column v-if="isAdmin" label="操作" width="150" fixed="right" align="center">
           <template slot-scope="{ row }">
             <el-button type="text" @click="openEdit(row)">编辑</el-button>
             <el-button type="text" class="danger" @click="handleDelete(row, row.title, deleteMaterial)">删除</el-button>
