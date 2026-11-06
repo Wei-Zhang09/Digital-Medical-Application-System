@@ -3,27 +3,34 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qst.medical.mapper.CityMapper">
 
+    <!-- 城市名来自字典表 sysregion：city_number 就是行政区划代码，对应 sysregion.id（Level=2 地级市） -->
     <select id="selectCity" resultType="com.qst.medical.domain.entity.City">
-        SELECT city_id, city_number, createtime, updatetime
-        FROM city
+        SELECT c.city_id, c.city_number, c.createtime, c.updatetime,
+               SUBSTRING_INDEX(r.MerName, ',', -1) AS city_name
+        FROM city c
+                 LEFT JOIN sysregion r ON r.id = c.city_number AND r.Level = 2
         <where>
             <if test="cityNumber != null">
-                AND city_number = #{cityNumber}
+                AND c.city_number = #{cityNumber}
             </if>
         </where>
-        ORDER BY city_id DESC
+        ORDER BY c.city_id DESC
     </select>
 
     <select id="selectAllCity" resultType="com.qst.medical.domain.entity.City">
-        SELECT city_id, city_number, createtime, updatetime
-        FROM city
-        ORDER BY city_id
+        SELECT c.city_id, c.city_number, c.createtime, c.updatetime,
+               SUBSTRING_INDEX(r.MerName, ',', -1) AS city_name
+        FROM city c
+                 LEFT JOIN sysregion r ON r.id = c.city_number AND r.Level = 2
+        ORDER BY c.city_id
     </select>
 
     <select id="selectById" resultType="com.qst.medical.domain.entity.City">
-        SELECT city_id, city_number, createtime, updatetime
-        FROM city
-        WHERE city_id = #{cityId}
+        SELECT c.city_id, c.city_number, c.createtime, c.updatetime,
+               SUBSTRING_INDEX(r.MerName, ',', -1) AS city_name
+        FROM city c
+                 LEFT JOIN sysregion r ON r.id = c.city_number AND r.Level = 2
+        WHERE c.city_id = #{cityId}
     </select>
 
     <insert id="insertCity" useGeneratedKeys="true" keyProperty="cityId">

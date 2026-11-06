@@ -43,7 +43,7 @@
             <el-tag size="mini" type="info">{{ row.source }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="time" width="180" align="center" />
+        <el-table-column prop="time" width="200" align="center" />
       </el-table>
       <p v-if="!(data.news || []).length" class="empty-tip">暂无资讯</p>
     </el-card>

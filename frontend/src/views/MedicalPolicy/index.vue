@@ -19,12 +19,12 @@
 
       <el-table :data="list" v-loading="loading" border stripe>
         <el-table-column prop="id" label="编号" width="80" align="center" />
-        <el-table-column prop="title" label="政策标题" min-width="200" show-overflow-tooltip />
+        <el-table-column prop="title" label="政策标题" min-width="280" show-overflow-tooltip />
         <el-table-column label="生效城市" width="130" align="center">
           <template slot-scope="{ row }">{{ cityLabel(row.cityId) }}</template>
         </el-table-column>
-        <el-table-column prop="message" label="政策内容" show-overflow-tooltip />
-        <el-table-column prop="updateTime" label="更新时间" width="160" align="center" />
+        <el-table-column prop="message" label="政策内容" min-width="240" />
+        <el-table-column prop="updateTime" label="更新时间" width="180" align="center" />
         <el-table-column v-if="isAdmin" label="操作" width="150" fixed="right" align="center">
           <template slot-scope="{ row }">
             <el-button type="text" @click="openEdit(row)">编辑</el-button>
@@ -50,7 +50,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="生效城市" prop="cityId">
           <el-select v-model="form.cityId" placeholder="请选择城市（一条政策对应一个城市）" filterable style="width: 100%">
-            <el-option v-for="c in cities" :key="c.cityId" :label="'城市编号 ' + c.cityNumber" :value="c.cityId" />
+            <el-option v-for="c in cities" :key="c.cityId" :label="c.cityName ? c.cityName + '（' + c.cityNumber + '）' : '城市编号 ' + c.cityNumber" :value="c.cityId" />
           </el-select>
         </el-form-item>
         <el-form-item label="政策标题" prop="title">
@@ -97,7 +97,8 @@ export default {
     },
     cityLabel (cityId) {
       const hit = this.cities.find(c => c.cityId === cityId)
-      return hit ? '编号 ' + hit.cityNumber : cityId
+      if (!hit) return cityId
+      return hit.cityName ? hit.cityName : '编号 ' + hit.cityNumber
     },
     fetchList () {
       this.loading = true

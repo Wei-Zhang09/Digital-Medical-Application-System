@@ -39,7 +39,10 @@
   margin-bottom: 5px;
 }
 .el-container .el-table {
-  padding: 0px 20px;
+  /* 原素材这里是 padding: 0 20px —— 会让表格比 body-wrapper 宽 40px，
+     配合 fixed="right" 的操作列就把右侧「更新时间」等列盖掉了。
+     卡片本身已有 20px 内边距，这里归零。 */
+  padding: 0;
   border: 0;
 }
 .el-container .el-table .demo-table-expand {

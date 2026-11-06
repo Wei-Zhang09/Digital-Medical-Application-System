@@ -18,4 +18,12 @@ public class City implements Serializable {
     private Integer cityNumber;
     private LocalDateTime createtime;
     private LocalDateTime updatetime;
+
+    /**
+     * 城市名称（展示用，不入库）。
+     *
+     * <p>city 表本身只有编号，没有名字；这里用 city_number 关联字典表 sysregion 的 id
+     * （行政区划代码，Level=2 即地级市），取 MerName 的最后一段，如「唐山市」。</p>
+     */
+    private String cityName;
 }

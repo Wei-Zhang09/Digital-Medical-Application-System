@@ -21,7 +21,7 @@
         <el-table-column prop="companyId" label="公司ID" width="90" align="center" />
         <el-table-column prop="companyName" label="公司名称" min-width="200" show-overflow-tooltip />
         <el-table-column prop="companyPhone" label="联系电话" min-width="150" align="center" />
-        <el-table-column prop="createtime" label="创建时间" align="center" />
+        <el-table-column prop="createtime" label="创建时间" min-width="180" align="center" />
         <el-table-column v-if="isAdmin" label="操作" width="150" fixed="right" align="center">
           <template slot-scope="{ row }">
             <el-button type="text" @click="openEdit(row)">编辑</el-button>
