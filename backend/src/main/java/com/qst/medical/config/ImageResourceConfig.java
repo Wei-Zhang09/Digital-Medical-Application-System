@@ -20,7 +20,18 @@ public class ImageResourceConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        String location = new File(uploadPath).getAbsoluteFile().toURI().toString();
+        File dir = new File(uploadPath).getAbsoluteFile();
+
+        // 启动时就建好目录：目录不存在时 toURI() 不带结尾斜杠，
+        // Spring 会当成「文件」而不是「目录」解析，导致 /image/** 全部 404。
+        if (!dir.exists() && !dir.mkdirs()) {
+            throw new IllegalStateException("无法创建上传目录：" + dir);
+        }
+
+        String location = dir.toURI().toString();
+        if (!location.endsWith("/")) {
+            location = location + "/";
+        }
         registry.addResourceHandler("/image/**").addResourceLocations(location);
     }
 }

@@ -47,6 +47,13 @@
     }
   }
 
+  // 表格主体内部滚动：文字换行后行高变大，不限制的话分页会被顶到屏幕外，
+  // 看起来像「分页不见了」。表头在 body-wrapper 之外，滚动时仍然固定。
+  .el-table .el-table__body-wrapper {
+    max-height: calc(100vh - 380px);
+    overflow-y: auto;
+  }
+
   .el-table {
     // 原素材这里是 padding: 0 20px —— 表格会比 body-wrapper 宽 40px，
     // 配合 fixed="right" 的操作列会把右侧「更新时间」等列盖掉（用户截图反馈的问题）。
