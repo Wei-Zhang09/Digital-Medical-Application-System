@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qst.medical.mapper.OperationLogMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO operation_log (uname, realname, module, action, detail, ip, createtime)
+        VALUES (#{uname}, #{realname}, #{module}, #{action}, #{detail}, #{ip}, #{createtime})
+    </insert>
+
+    <select id="selectLogPage" resultType="com.qst.medical.domain.entity.OperationLog">
+        SELECT id, uname, realname, module, action, detail, ip, createtime
+        FROM operation_log
+        <where>
+            <if test="keyword != null and keyword != ''">
+                (uname LIKE CONCAT('%', #{keyword}, '%')
+                 OR realname LIKE CONCAT('%', #{keyword}, '%')
+                 OR module LIKE CONCAT('%', #{keyword}, '%')
+                 OR action LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+</mapper>

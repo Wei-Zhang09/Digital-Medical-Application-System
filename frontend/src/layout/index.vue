@@ -158,7 +158,8 @@ export default {
         '/manage/company/policy': 'el-icon-document-checked',
         '/manage/doctor': 'el-icon-user',
         '/manage/material': 'el-icon-folder-opened',
-        '/manage/account': 'el-icon-s-custom'
+        '/manage/account': 'el-icon-s-custom',
+        '/manage/log': 'el-icon-document-copy'
       }
       return map[item.path] || 'el-icon-menu'
     },
