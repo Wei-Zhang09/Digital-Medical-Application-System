@@ -1,6 +1,7 @@
 package com.qst.medical.service;
 
 import com.qst.medical.domain.dto.AccountDto;
+import com.qst.medical.domain.param.RegisterParam;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -18,4 +19,12 @@ public interface AccountService extends UserDetailsService {
      * @return 用户，不存在返回 null
      */
     AccountDto getAccountByUname(String uname);
+
+    /**
+     * 自助注册：创建登录账号，角色固定 ROLE_2。
+     *
+     * @param param 注册入参（已通过 Bean Validation）
+     * @throws IllegalArgumentException 登录名已存在 / 两次密码不一致
+     */
+    void register(RegisterParam param);
 }

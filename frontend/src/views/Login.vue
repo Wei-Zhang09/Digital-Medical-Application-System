@@ -47,6 +47,11 @@
         <p class="demo-title">演示账号</p>
         <p>管理员：admin_1 / 123456　医师：王小明4125 / 123456</p>
       </div>
+
+      <div class="register-entry">
+        <span>还没有账号？</span>
+        <el-link type="primary" :underline="false" @click="goRegister">立即注册</el-link>
+      </div>
     </div>
 
     <p class="login-footer">慧医数字医疗应用系统 · 软件工程232 张伟</p>
@@ -100,6 +105,9 @@ export default {
             this.loading = false
           })
       })
+    },
+    goRegister () {
+      this.$router.push('/user/register').catch(() => {})
     }
   }
 }
@@ -199,6 +207,18 @@ export default {
   margin: 0 0 2px;
   color: #606266;
   font-weight: 600;
+}
+
+.register-entry {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #909399;
+  text-align: center;
+}
+.register-entry .el-link {
+  margin-left: 4px;
+  font-size: 13px;
+  color: #13b7a5;
 }
 
 .login-footer {

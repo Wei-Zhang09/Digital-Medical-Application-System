@@ -17,6 +17,12 @@ const routes = [
     name: 'Login',
     component: () => import('../views/Login.vue'),
     meta: { title: '登录' }
+  },
+  {
+    path: '/user/register',
+    name: 'Register',
+    component: () => import('../views/Register.vue'),
+    meta: { title: '注册' }
   }
 ]
 
@@ -28,8 +34,8 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
   const token = store.state.token
 
-  // 登录页：已登录就直接进首页
-  if (to.path === '/user/login') {
+  // 免登录页面：登录页、注册页。已登录再访问就直接进首页
+  if (to.path === '/user/login' || to.path === '/user/register') {
     return token ? next('/home') : next()
   }
 

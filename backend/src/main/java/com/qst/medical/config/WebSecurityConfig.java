@@ -44,6 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String[] PERMIT_ALL = {
             "/api/login",
             "/login",
+            // 自助注册
+            "/api/register",
             // Swagger2
             "/v2/api-docs",
             "/swagger-resources",
