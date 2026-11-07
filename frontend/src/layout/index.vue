@@ -3,7 +3,8 @@
     <!-- 左侧菜单：菜单项来自后端 /api/permissions，不写死 -->
     <el-aside width="240px" class="layout-aside">
       <div class="logo-area">
-        <img src="../assets/HomeLogo.png" alt="慧医" class="logo-img" />
+        <img src="../assets/logo.png" alt="慧医" class="logo-img" />
+        <span class="logo-title">慧医数字医疗</span>
       </div>
 
       <el-menu
@@ -121,11 +122,22 @@ export default {
   height: 64px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding: 0 16px;
   background-color: #18232f;
+  gap: 10px;
 }
 .logo-img {
-  height: 34px;
+  width: 30px;
+  height: 30px;
+  flex: none;
+}
+.logo-title {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 .layout-menu {

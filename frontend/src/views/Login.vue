@@ -123,9 +123,12 @@ export default {
   align-items: center;
 }
 .brand-logo {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   margin-right: 16px;
+  border-radius: 50%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  flex: none;
 }
 .brand-text h1 {
   margin: 0;
