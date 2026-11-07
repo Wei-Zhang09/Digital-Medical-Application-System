@@ -1,6 +1,8 @@
 package com.qst.medical.service;
 
+import com.qst.medical.common.PageBean;
 import com.qst.medical.domain.dto.AccountDto;
+import com.qst.medical.domain.param.AccountParam;
 import com.qst.medical.domain.param.PasswordParam;
 import com.qst.medical.domain.param.RegisterParam;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,4 +39,33 @@ public interface AccountService extends UserDetailsService {
      * @throws IllegalArgumentException 原密码错误 / 两次新密码不一致 / 新旧密码相同
      */
     void changePassword(Long accountId, PasswordParam param);
+
+    /** 账号分页列表（keyword 模糊匹配登录名/姓名） */
+    PageBean getAccountList(Integer pageNum, Integer pageSize, String keyword);
+
+    /**
+     * 新增账号（初始口令 123456）。
+     *
+     * @throws IllegalArgumentException 登录名已存在
+     */
+    void addAccount(AccountParam param);
+
+    /**
+     * 修改账号资料与角色。
+     *
+     * @throws IllegalArgumentException 账号不存在 / 不允许把最后一个管理员降级
+     */
+    void updateAccount(Long id, AccountParam param);
+
+    /** 重置口令为 123456 */
+    void resetPassword(Long id);
+
+    /**
+     * 删除账号。
+     *
+     * @param id        被删账号
+     * @param currentId 当前登录账号（不允许删自己）
+     * @throws IllegalArgumentException 不能删自己 / 不能删最后一个管理员
+     */
+    void deleteAccount(Long id, Long currentId);
 }

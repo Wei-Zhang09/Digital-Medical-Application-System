@@ -48,4 +48,28 @@
         DELETE FROM account WHERE id = #{id}
     </delete>
 
+    <select id="selectAccountPage" resultType="com.qst.medical.domain.dataobject.AccountDo">
+        SELECT id, realname, uname, pwd, phonenumber, utype, utype AS role, createtime, updatetime
+        FROM account
+        <where>
+            <if test="keyword != null and keyword != ''">
+                (uname LIKE CONCAT('%', #{keyword}, '%') OR realname LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY id ASC
+    </select>
+
+    <select id="countByUtype" resultType="int">
+        SELECT COUNT(*) FROM account WHERE utype = #{utype}
+    </select>
+
+    <update id="updateAccountBasicInfo">
+        UPDATE account
+        SET realname    = #{realname},
+            phonenumber = #{phonenumber},
+            utype       = #{utype},
+            updatetime  = #{updatetime}
+        WHERE id = #{id}
+    </update>
+
 </mapper>

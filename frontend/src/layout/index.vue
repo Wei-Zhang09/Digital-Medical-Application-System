@@ -157,7 +157,8 @@ export default {
         '/manage/medical/policy': 'el-icon-document',
         '/manage/company/policy': 'el-icon-document-checked',
         '/manage/doctor': 'el-icon-user',
-        '/manage/material': 'el-icon-folder-opened'
+        '/manage/material': 'el-icon-folder-opened',
+        '/manage/account': 'el-icon-s-custom'
       }
       return map[item.path] || 'el-icon-menu'
     },

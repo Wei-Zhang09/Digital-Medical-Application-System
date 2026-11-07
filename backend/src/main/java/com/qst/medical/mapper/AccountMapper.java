@@ -33,4 +33,13 @@ public interface AccountMapper {
     int updatePwd(@Param("id") Long id, @Param("pwd") String pwd);
 
     int deleteById(@Param("id") Long id);
+
+    /** 账号列表（keyword 模糊匹配登录名/姓名，null 表示不过滤） */
+    java.util.List<AccountDo> selectAccountPage(@Param("keyword") String keyword);
+
+    /** 某角色下的账号数量（用于保护最后一个管理员） */
+    int countByUtype(@Param("utype") String utype);
+
+    /** 修改姓名、手机号、角色（登录名与口令不在此更新） */
+    int updateAccountBasicInfo(AccountDo account);
 }
