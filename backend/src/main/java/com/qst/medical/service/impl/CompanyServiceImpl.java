@@ -3,6 +3,7 @@ package com.qst.medical.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.qst.medical.common.PageBean;
 import com.qst.medical.common.PageUtil;
+import com.qst.medical.common.SortUtil;
 import com.qst.medical.domain.entity.Company;
 import com.qst.medical.domain.param.CompanyParam;
 import com.qst.medical.mapper.CompanyMapper;
@@ -21,8 +22,8 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyMapper companyMapper;
 
     @Override
-    public PageBean getCompanyList(Integer pageNum, Integer pageSize, String name) {
-        PageHelper.startPage(pageNum, pageSize);
+    public PageBean getCompanyList(Integer pageNum, Integer pageSize, String name, String sort, String order) {
+        PageHelper.startPage(pageNum, pageSize, SortUtil.build("company", sort, order));
         return PageUtil.toPageBean(companyMapper.selectCompany(name));
     }
 

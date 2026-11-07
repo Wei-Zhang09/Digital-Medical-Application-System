@@ -17,9 +17,9 @@
         </div>
       </div>
 
-      <el-table :data="list" v-loading="loading" border stripe>
+      <el-table :data="list" v-loading="loading" border stripe @sort-change="handleSortChange">
         <el-table-column prop="id" label="编号" width="80" align="center" />
-        <el-table-column prop="title" label="政策标题" min-width="240" show-overflow-tooltip />
+        <el-table-column prop="title" label="政策标题" min-width="240" show-overflow-tooltip sortable="custom" />
         <el-table-column label="所属医药公司" min-width="180" show-overflow-tooltip>
           <template slot-scope="{ row }">{{ companyName(row.companyId) }}</template>
         </el-table-column>
@@ -101,7 +101,7 @@ export default {
     },
     fetchList () {
       this.loading = true
-      getCompanyPolicyList(this.pageNum, this.pageSize, this.keyword)
+      getCompanyPolicyList(this.pageNum, this.pageSize, this.keyword, this.sort, this.order)
         .then(res => {
           const page = res.data.companyPolicyPageInfo
           this.list = page.list

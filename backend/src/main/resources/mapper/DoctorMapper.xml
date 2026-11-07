@@ -17,6 +17,12 @@
             <if test="name != null and name != ''">
                 AND d.name LIKE CONCAT('%', #{name}, '%')
             </if>
+            <if test="levelId != null">
+                AND d.level_id = #{levelId}
+            </if>
+            <if test="typeId != null">
+                AND d.type_id = #{typeId}
+            </if>
         </where>
         ORDER BY d.id DESC
     </select>

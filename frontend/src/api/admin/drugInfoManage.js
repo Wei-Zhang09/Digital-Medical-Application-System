@@ -1,8 +1,8 @@
 import request from '../../utils/request'
 
 /** 药品信息：分页 / 详情 / 增删改 / 图片上传 */
-export function getDrugList (pageNum, pageSize, name) {
-  return request.get(`/drugs/${pageNum}/${pageSize}`, { params: { name } })
+export function getDrugList (pageNum, pageSize, name, drugInfo, sort, order) {
+  return request.get(`/drugs/${pageNum}/${pageSize}`, { params: { name, drugInfo, sort, order } })
 }
 export function getDrugDetail (drugId) {
   return request.get(`/drugs/${drugId}`)

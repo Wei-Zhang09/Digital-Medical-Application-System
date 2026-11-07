@@ -10,6 +10,12 @@
           @keyup.enter.native="handleSearch"
           @clear="handleSearch"
         />
+        <el-select v-model="levelId" class="filter-select" placeholder="全部职称" clearable @change="handleSearch">
+          <el-option v-for="l in levels" :key="l.id" :label="l.name" :value="l.id" />
+        </el-select>
+        <el-select v-model="typeId" class="filter-select" placeholder="全部科室" clearable @change="handleSearch">
+          <el-option v-for="t in types" :key="t.id" :label="t.name" :value="t.id" />
+        </el-select>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">查询</el-button>
         <el-button icon="el-icon-refresh" @click="handleReset">重置</el-button>
         <div class="toolbar-right" v-if="isAdmin">
@@ -17,16 +23,16 @@
         </div>
       </div>
 
-      <el-table :data="list" v-loading="loading" border stripe>
+      <el-table :data="list" v-loading="loading" border stripe @sort-change="handleSortChange">
         <el-table-column prop="id" label="ID" width="70" align="center" />
-        <el-table-column prop="name" label="姓名" min-width="100" />
-        <el-table-column prop="age" label="年龄" width="70" align="center" />
+        <el-table-column prop="name" label="姓名" min-width="100" sortable="custom" />
+        <el-table-column prop="age" label="年龄" width="70" align="center" sortable="custom" />
         <el-table-column label="性别" width="70" align="center">
           <template slot-scope="{ row }">{{ row.sex === 1 ? '男' : '女' }}</template>
         </el-table-column>
         <el-table-column prop="levelName" label="职称" min-width="100" align="center" />
         <el-table-column prop="typeName" label="科室" min-width="100" align="center" />
-        <el-table-column prop="phone" label="联系电话" min-width="120" align="center" />
+        <el-table-column prop="phone" label="联系电话" min-width="120" align="center" sortable="custom" />
         <el-table-column prop="hospital" label="所属医院" min-width="140" show-overflow-tooltip />
         <el-table-column prop="uname" label="登录名" min-width="120" align="center" />
         <el-table-column v-if="isAdmin" label="操作" width="200" fixed="right" align="center">
@@ -147,13 +153,20 @@ export default {
     this.loadOptions()
   },
   methods: {
+    handleReset () {
+      this.keyword = ''
+      this.levelId = null
+      this.typeId = null
+      this.pageNum = 1
+      this.fetchList()
+    },
     loadOptions () {
       getDoctorLevels().then(res => { this.levels = res.data.levels || [] }).catch(() => {})
       getDoctorTypes().then(res => { this.types = res.data.types || [] }).catch(() => {})
     },
     fetchList () {
       this.loading = true
-      getDoctorList(this.pageNum, this.pageSize, this.keyword)
+      getDoctorList(this.pageNum, this.pageSize, this.keyword, this.levelId, this.typeId, this.sort, this.order)
         .then(res => {
           const page = res.data.doctorPageInfo
           this.list = page.list
@@ -210,6 +223,9 @@ export default {
   align-items: center;
   gap: 8px;
   margin-bottom: 14px;
+}
+.filter-select {
+  width: 140px;
 }
 .search-input {
   width: 240px;

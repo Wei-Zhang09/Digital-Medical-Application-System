@@ -24,9 +24,11 @@ public class CompanyPolicyController {
     @GetMapping("/{pageNum}/{pageSize}")
     public Msg getCompanyPolicyList(@PathVariable @Min(1) Integer pageNum,
                                     @PathVariable @Min(1) Integer pageSize,
-                                    @RequestParam(required = false) String title) {
+                                    @RequestParam(required = false) String title,
+                           @RequestParam(required = false) String sort,
+                           @RequestParam(required = false) String order) {
         return Msg.success().data("companyPolicyPageInfo",
-                companyPolicyService.getCompanyPolicyList(pageNum, pageSize, title));
+                companyPolicyService.getCompanyPolicyList(pageNum, pageSize, title, sort, order));
     }
 
     @ApiOperation("新增公司政策（管理员）")

@@ -41,7 +41,7 @@ public interface AccountService extends UserDetailsService {
     void changePassword(Long accountId, PasswordParam param);
 
     /** 账号分页列表（keyword 模糊匹配登录名/姓名） */
-    PageBean getAccountList(Integer pageNum, Integer pageSize, String keyword);
+    PageBean getAccountList(Integer pageNum, Integer pageSize, String keyword, String sort, String order);
 
     /**
      * 新增账号（初始口令 123456）。

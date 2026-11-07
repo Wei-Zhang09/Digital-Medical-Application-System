@@ -29,10 +29,10 @@
 
       <!-- 列表视图 -->
       <template v-if="!mapMode">
-        <el-table :data="list" v-loading="loading" border stripe>
+        <el-table :data="list" v-loading="loading" border stripe @sort-change="handleSortChange">
           <el-table-column prop="saleId" label="ID" width="90" align="center" />
-          <el-table-column prop="saleName" label="药店名称" min-width="180" show-overflow-tooltip />
-          <el-table-column prop="salePhone" label="联系电话" min-width="130" align="center" />
+          <el-table-column prop="saleName" label="药店名称" min-width="180" show-overflow-tooltip sortable="custom" />
+          <el-table-column prop="salePhone" label="联系电话" min-width="130" align="center" sortable="custom" />
           <el-table-column prop="address" label="地址" min-width="220" show-overflow-tooltip>
             <template slot-scope="{ row }">{{ row.address || '—' }}</template>
           </el-table-column>
@@ -129,7 +129,7 @@ export default {
   methods: {
     fetchList () {
       this.loading = true
-      getSaleList(this.pageNum, this.pageSize, this.keyword)
+      getSaleList(this.pageNum, this.pageSize, this.keyword, this.sort, this.order)
         .then(res => {
           const page = res.data.salePageInfo
           this.list = page.list

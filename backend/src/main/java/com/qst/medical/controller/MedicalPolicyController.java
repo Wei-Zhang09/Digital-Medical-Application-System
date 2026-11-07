@@ -24,9 +24,11 @@ public class MedicalPolicyController {
     @GetMapping("/{pageNum}/{pageSize}")
     public Msg getMedicalPolicyList(@PathVariable @Min(1) Integer pageNum,
                                     @PathVariable @Min(1) Integer pageSize,
-                                    @RequestParam(required = false) String title) {
+                                    @RequestParam(required = false) String title,
+                           @RequestParam(required = false) String sort,
+                           @RequestParam(required = false) String order) {
         return Msg.success().data("medicalPolicyPageInfo",
-                medicalPolicyService.getMedicalPolicyList(pageNum, pageSize, title));
+                medicalPolicyService.getMedicalPolicyList(pageNum, pageSize, title, sort, order));
     }
 
     @ApiOperation("新增医保政策（管理员）")

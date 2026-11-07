@@ -24,9 +24,11 @@ public class CompanyController {
     @GetMapping("/{pageNum}/{pageSize}")
     public Msg getCompanyList(@PathVariable @Min(1) Integer pageNum,
                               @PathVariable @Min(1) Integer pageSize,
-                              @RequestParam(required = false) String name) {
+                              @RequestParam(required = false) String name,
+                           @RequestParam(required = false) String sort,
+                           @RequestParam(required = false) String order) {
         return Msg.success().data("companyPageInfo",
-                companyService.getCompanyList(pageNum, pageSize, name));
+                companyService.getCompanyList(pageNum, pageSize, name, sort, order));
     }
 
     @ApiOperation("全部医药公司（下拉框用）")

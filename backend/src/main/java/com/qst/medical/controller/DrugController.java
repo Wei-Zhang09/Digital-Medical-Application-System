@@ -27,9 +27,12 @@ public class DrugController {
     @GetMapping("/{pageNum}/{pageSize}")
     public Msg getDrugList(@PathVariable @Min(1) Integer pageNum,
                            @PathVariable @Min(1) Integer pageSize,
-                           @RequestParam(required = false) String name) {
+                           @RequestParam(required = false) String name,
+                           @RequestParam(required = false) String drugInfo,
+                           @RequestParam(required = false) String sort,
+                           @RequestParam(required = false) String order) {
         return Msg.success().data("drugPageInfo",
-                drugService.getDrugList(pageNum, pageSize, name));
+                drugService.getDrugList(pageNum, pageSize, name, drugInfo, sort, order));
     }
 
     @ApiOperation("药品详情（含关联药店）")

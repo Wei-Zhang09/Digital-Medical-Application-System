@@ -3,6 +3,7 @@ package com.qst.medical.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.qst.medical.common.PageBean;
 import com.qst.medical.common.PageUtil;
+import com.qst.medical.common.SortUtil;
 import com.qst.medical.domain.dataobject.AccountDo;
 import com.qst.medical.domain.param.AccountParam;
 import com.qst.medical.domain.dto.AccountDto;
@@ -91,8 +92,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public PageBean getAccountList(Integer pageNum, Integer pageSize, String keyword) {
-        PageHelper.startPage(pageNum, pageSize);
+    public PageBean getAccountList(Integer pageNum, Integer pageSize, String keyword, String sort, String order) {
+        PageHelper.startPage(pageNum, pageSize, SortUtil.build("account", sort, order));
         String kw = (keyword == null || keyword.trim().isEmpty()) ? null : keyword.trim();
         List<AccountDo> list = accountMapper.selectAccountPage(kw);
         return PageUtil.toPageBean(list);

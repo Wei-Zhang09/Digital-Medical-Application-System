@@ -1,8 +1,8 @@
 import request from '../../utils/request'
 
 /** 医药公司政策 */
-export function getCompanyPolicyList (pageNum, pageSize, title) {
-  return request.get(`/companyPolicies/${pageNum}/${pageSize}`, { params: { title } })
+export function getCompanyPolicyList (pageNum, pageSize, title, sort, order) {
+  return request.get(`/companyPolicies/${pageNum}/${pageSize}`, { params: { title, sort, order } })
 }
 export function addCompanyPolicy (data) {
   return request.post('/companyPolicies', data)

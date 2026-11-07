@@ -3,6 +3,7 @@ package com.qst.medical.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.qst.medical.common.PageBean;
 import com.qst.medical.common.PageUtil;
+import com.qst.medical.common.SortUtil;
 import com.qst.medical.domain.entity.City;
 import com.qst.medical.domain.param.CityParam;
 import com.qst.medical.mapper.CityMapper;
@@ -21,8 +22,8 @@ public class CityServiceImpl implements CityService {
     private CityMapper cityMapper;
 
     @Override
-    public PageBean getCityList(Integer pageNum, Integer pageSize, Integer cityNumber) {
-        PageHelper.startPage(pageNum, pageSize);
+    public PageBean getCityList(Integer pageNum, Integer pageSize, Integer cityNumber, String sort, String order) {
+        PageHelper.startPage(pageNum, pageSize, SortUtil.build("city", sort, order));
         return PageUtil.toPageBean(cityMapper.selectCity(cityNumber));
     }
 

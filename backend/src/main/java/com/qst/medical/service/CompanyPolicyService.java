@@ -5,7 +5,7 @@ import com.qst.medical.domain.param.CompanyPolicyParam;
 
 public interface CompanyPolicyService {
 
-    PageBean getCompanyPolicyList(Integer pageNum, Integer pageSize, String title);
+    PageBean getCompanyPolicyList(Integer pageNum, Integer pageSize, String title, String sort, String order);
 
     void addCompanyPolicy(CompanyPolicyParam param);
 

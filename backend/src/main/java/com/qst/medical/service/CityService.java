@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface CityService {
 
-    PageBean getCityList(Integer pageNum, Integer pageSize, Integer cityNumber);
+    PageBean getCityList(Integer pageNum, Integer pageSize, Integer cityNumber, String sort, String order);
 
     /** 全部城市，供医保政策下拉框使用 */
     List<City> getAllCity();

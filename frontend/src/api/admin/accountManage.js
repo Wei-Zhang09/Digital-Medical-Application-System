@@ -1,9 +1,9 @@
 import request from '../../utils/request'
 
 /** 账号分页列表（管理员） */
-export function getAccountList (pageNum, pageSize, keyword) {
+export function getAccountList (pageNum, pageSize, keyword, sort, order) {
   return request.get(`/accounts/${pageNum}/${pageSize}`, {
-    params: keyword ? { keyword } : {}
+    params: { keyword, sort, order }
   })
 }
 

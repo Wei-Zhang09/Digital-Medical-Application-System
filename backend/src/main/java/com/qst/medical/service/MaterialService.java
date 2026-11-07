@@ -8,7 +8,7 @@ import com.qst.medical.domain.param.MaterialParam;
  */
 public interface MaterialService {
 
-    PageBean getMaterialList(Integer pageNum, Integer pageSize, String title);
+    PageBean getMaterialList(Integer pageNum, Integer pageSize, String title, String sort, String order);
 
     void addMaterial(MaterialParam param);
 

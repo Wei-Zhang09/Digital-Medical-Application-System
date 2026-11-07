@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CompanyService {
 
-    PageBean getCompanyList(Integer pageNum, Integer pageSize, String name);
+    PageBean getCompanyList(Integer pageNum, Integer pageSize, String name, String sort, String order);
 
     List<Company> getAllCompany();
 

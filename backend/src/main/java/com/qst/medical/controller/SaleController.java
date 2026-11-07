@@ -24,9 +24,11 @@ public class SaleController {
     @GetMapping("/{pageNum}/{pageSize}")
     public Msg getSaleList(@PathVariable @Min(1) Integer pageNum,
                            @PathVariable @Min(1) Integer pageSize,
-                           @RequestParam(required = false) String name) {
+                           @RequestParam(required = false) String name,
+                           @RequestParam(required = false) String sort,
+                           @RequestParam(required = false) String order) {
         return Msg.success().data("salePageInfo",
-                saleService.getSaleList(pageNum, pageSize, name));
+                saleService.getSaleList(pageNum, pageSize, name, sort, order));
     }
 
     @ApiOperation("全部销售地点（下拉框用）")

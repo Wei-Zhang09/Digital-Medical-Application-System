@@ -17,13 +17,13 @@
         </div>
       </div>
 
-      <el-table :data="list" v-loading="loading" border stripe>
+      <el-table :data="list" v-loading="loading" border stripe @sort-change="handleSortChange">
         <el-table-column prop="cityId" label="城市ID" width="110" align="center" />
         <el-table-column prop="cityName" label="城市名称" min-width="140">
           <template slot-scope="{ row }">{{ row.cityName || '—' }}</template>
         </el-table-column>
-        <el-table-column prop="cityNumber" label="行政区划代码" width="150" align="center" />
-        <el-table-column prop="createtime" label="创建时间" min-width="180" align="center" />
+        <el-table-column prop="cityNumber" label="行政区划代码" width="150" align="center" sortable="custom" />
+        <el-table-column prop="createtime" label="创建时间" min-width="180" align="center" sortable="custom" />
         <el-table-column v-if="isAdmin" label="操作" width="120" fixed="right" align="center">
           <template slot-scope="{ row }">
             <el-button type="text" class="danger" @click="handleDelete(row, '城市 ' + row.cityNumber, deleteCity)">删除</el-button>
@@ -83,7 +83,7 @@ export default {
       this.loading = true
       // 关键字是数字编号，空串要传 undefined，否则后端转 Integer 会失败
       const cityNumber = this.keyword === '' ? undefined : Number(this.keyword)
-      getCityList(this.pageNum, this.pageSize, cityNumber)
+      getCityList(this.pageNum, this.pageSize, cityNumber, this.sort, this.order)
         .then(res => {
           const page = res.data.cityPageInfo
           this.list = page.list

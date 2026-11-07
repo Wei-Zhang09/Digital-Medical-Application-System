@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SaleService {
 
-    PageBean getSaleList(Integer pageNum, Integer pageSize, String name);
+    PageBean getSaleList(Integer pageNum, Integer pageSize, String name, String sort, String order);
 
     List<Sale> getAllSale();
 

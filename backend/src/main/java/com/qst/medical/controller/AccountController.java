@@ -71,9 +71,11 @@ public class AccountController {
     @RolesAllowed({"ROLE_1"})
     public Msg getAccountList(@PathVariable @Min(1) Integer pageNum,
                               @PathVariable @Min(1) Integer pageSize,
-                              @RequestParam(required = false) String keyword) {
+                              @RequestParam(required = false) String keyword,
+                           @RequestParam(required = false) String sort,
+                           @RequestParam(required = false) String order) {
         return Msg.success().data("accountPageInfo",
-                accountService.getAccountList(pageNum, pageSize, keyword));
+                accountService.getAccountList(pageNum, pageSize, keyword, sort, order));
     }
 
     @ApiOperation("新增账号（管理员，初始口令 123456）")

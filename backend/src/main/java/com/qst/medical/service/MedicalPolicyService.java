@@ -5,7 +5,7 @@ import com.qst.medical.domain.param.MedicalPolicyParam;
 
 public interface MedicalPolicyService {
 
-    PageBean getMedicalPolicyList(Integer pageNum, Integer pageSize, String title);
+    PageBean getMedicalPolicyList(Integer pageNum, Integer pageSize, String title, String sort, String order);
 
     void addMedicalPolicy(MedicalPolicyParam param);
 

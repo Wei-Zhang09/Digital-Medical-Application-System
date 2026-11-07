@@ -30,9 +30,13 @@ public class DoctorController {
     @GetMapping("/{pageNum}/{pageSize}")
     public Msg getDoctorList(@PathVariable @Min(1) Integer pageNum,
                              @PathVariable @Min(1) Integer pageSize,
-                             @RequestParam(required = false) String name) {
+                             @RequestParam(required = false) String name,
+                           @RequestParam(required = false) Integer levelId,
+                           @RequestParam(required = false) Integer typeId,
+                           @RequestParam(required = false) String sort,
+                           @RequestParam(required = false) String order) {
         return Msg.success().data("doctorPageInfo",
-                doctorService.getDoctorList(pageNum, pageSize, name));
+                doctorService.getDoctorList(pageNum, pageSize, name, levelId, typeId, sort, order));
     }
 
     @ApiOperation("医师级别下拉框")

@@ -3,6 +3,7 @@ package com.qst.medical.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.qst.medical.common.PageBean;
 import com.qst.medical.common.PageUtil;
+import com.qst.medical.common.SortUtil;
 import com.qst.medical.domain.entity.MedicalPolicy;
 import com.qst.medical.domain.param.MedicalPolicyParam;
 import com.qst.medical.mapper.CityMapper;
@@ -26,8 +27,8 @@ public class MedicalPolicyServiceImpl implements MedicalPolicyService {
     private CityMapper cityMapper;
 
     @Override
-    public PageBean getMedicalPolicyList(Integer pageNum, Integer pageSize, String title) {
-        PageHelper.startPage(pageNum, pageSize);
+    public PageBean getMedicalPolicyList(Integer pageNum, Integer pageSize, String title, String sort, String order) {
+        PageHelper.startPage(pageNum, pageSize, SortUtil.build("medicalPolicy", sort, order));
         return PageUtil.toPageBean(medicalPolicyMapper.selectMedicalPolicy(title));
     }
 

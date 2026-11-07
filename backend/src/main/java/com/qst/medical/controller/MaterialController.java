@@ -26,9 +26,11 @@ public class MaterialController {
     @GetMapping("/{pageNum}/{pageSize}")
     public Msg getMaterialList(@PathVariable @Min(1) Integer pageNum,
                                @PathVariable @Min(1) Integer pageSize,
-                               @RequestParam(required = false) String title) {
+                               @RequestParam(required = false) String title,
+                           @RequestParam(required = false) String sort,
+                           @RequestParam(required = false) String order) {
         return Msg.success().data("materialPageInfo",
-                materialService.getMaterialList(pageNum, pageSize, title));
+                materialService.getMaterialList(pageNum, pageSize, title, sort, order));
     }
 
     @ApiOperation("新增必备材料（管理员）")

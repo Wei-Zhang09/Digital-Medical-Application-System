@@ -10,7 +10,9 @@ import java.util.List;
 public interface DoctorMapper {
 
     /** 按姓名模糊查询，联表带出级别名与类型名 */
-    List<Doctor> selectDoctor(@Param("name") String name);
+    List<Doctor> selectDoctor(@Param("name") String name,
+                              @Param("levelId") Integer levelId,
+                              @Param("typeId") Integer typeId);
 
     Doctor selectById(@Param("id") Long id);
 

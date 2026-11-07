@@ -17,10 +17,10 @@
         </div>
       </div>
 
-      <el-table :data="list" v-loading="loading" border stripe>
+      <el-table :data="list" v-loading="loading" border stripe @sort-change="handleSortChange">
         <el-table-column prop="id" label="ID" width="90" align="center" />
-        <el-table-column prop="uname" label="登录名" min-width="150" />
-        <el-table-column prop="realname" label="真实姓名" min-width="130">
+        <el-table-column prop="uname" label="登录名" min-width="150" sortable="custom" />
+        <el-table-column prop="realname" label="真实姓名" min-width="130" sortable="custom">
           <template slot-scope="{ row }">{{ row.realname || '—' }}</template>
         </el-table-column>
         <el-table-column prop="phonenumber" label="手机号" min-width="140" align="center">
@@ -33,7 +33,7 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createtime" label="创建时间" min-width="180" align="center" />
+        <el-table-column prop="createtime" label="创建时间" min-width="180" align="center" sortable="custom" />
         <el-table-column v-if="isAdmin" label="操作" width="200" fixed="right" align="center">
           <template slot-scope="{ row }">
             <el-button type="text" @click="openEdit(row)">编辑</el-button>
@@ -124,7 +124,7 @@ export default {
   methods: {
     fetchList () {
       this.loading = true
-      getAccountList(this.pageNum, this.pageSize, this.keyword.trim())
+      getAccountList(this.pageNum, this.pageSize, this.keyword.trim(), this.sort, this.order)
         .then(res => {
           const page = res.data.accountPageInfo
           this.list = page.list

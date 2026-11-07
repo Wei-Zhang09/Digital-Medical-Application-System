@@ -3,6 +3,7 @@ package com.qst.medical.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.qst.medical.common.PageBean;
 import com.qst.medical.common.PageUtil;
+import com.qst.medical.common.SortUtil;
 import com.qst.medical.domain.entity.Material;
 import com.qst.medical.domain.param.MaterialParam;
 import com.qst.medical.mapper.MaterialMapper;
@@ -20,8 +21,8 @@ public class MaterialServiceImpl implements MaterialService {
     private MaterialMapper materialMapper;
 
     @Override
-    public PageBean getMaterialList(Integer pageNum, Integer pageSize, String title) {
-        PageHelper.startPage(pageNum, pageSize);
+    public PageBean getMaterialList(Integer pageNum, Integer pageSize, String title, String sort, String order) {
+        PageHelper.startPage(pageNum, pageSize, SortUtil.build("material", sort, order));
         return PageUtil.toPageBean(materialMapper.selectMaterial(title));
     }
 

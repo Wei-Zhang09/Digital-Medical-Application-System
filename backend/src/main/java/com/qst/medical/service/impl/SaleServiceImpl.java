@@ -3,6 +3,7 @@ package com.qst.medical.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.qst.medical.common.PageBean;
 import com.qst.medical.common.PageUtil;
+import com.qst.medical.common.SortUtil;
 import com.qst.medical.domain.entity.Sale;
 import com.qst.medical.domain.param.SaleParam;
 import com.qst.medical.mapper.SaleMapper;
@@ -21,8 +22,8 @@ public class SaleServiceImpl implements SaleService {
     private SaleMapper saleMapper;
 
     @Override
-    public PageBean getSaleList(Integer pageNum, Integer pageSize, String name) {
-        PageHelper.startPage(pageNum, pageSize);
+    public PageBean getSaleList(Integer pageNum, Integer pageSize, String name, String sort, String order) {
+        PageHelper.startPage(pageNum, pageSize, SortUtil.build("sale", sort, order));
         return PageUtil.toPageBean(saleMapper.selectSale(name));
     }
 

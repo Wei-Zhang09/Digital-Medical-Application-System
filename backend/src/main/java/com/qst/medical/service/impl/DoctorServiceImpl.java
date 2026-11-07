@@ -3,6 +3,7 @@ package com.qst.medical.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.qst.medical.common.PageBean;
 import com.qst.medical.common.PageUtil;
+import com.qst.medical.common.SortUtil;
 import com.qst.medical.domain.dataobject.AccountDo;
 import com.qst.medical.domain.entity.Doctor;
 import com.qst.medical.domain.entity.DoctorLevel;
@@ -43,9 +44,10 @@ public class DoctorServiceImpl implements DoctorService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public PageBean getDoctorList(Integer pageNum, Integer pageSize, String name) {
-        PageHelper.startPage(pageNum, pageSize);
-        return PageUtil.toPageBean(doctorMapper.selectDoctor(name));
+    public PageBean getDoctorList(Integer pageNum, Integer pageSize, String name,
+                                  Integer levelId, Integer typeId, String sort, String order) {
+        PageHelper.startPage(pageNum, pageSize, SortUtil.build("doctor", sort, order));
+        return PageUtil.toPageBean(doctorMapper.selectDoctor(name, levelId, typeId));
     }
 
     @Override

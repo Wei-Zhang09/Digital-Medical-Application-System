@@ -1,8 +1,8 @@
 import request from '../../utils/request'
 
 /** 医生信息：分页 / 下拉数据 / 增删改 / 重置口令 */
-export function getDoctorList (pageNum, pageSize, name) {
-  return request.get(`/doctors/${pageNum}/${pageSize}`, { params: { name } })
+export function getDoctorList (pageNum, pageSize, name, levelId, typeId, sort, order) {
+  return request.get(`/doctors/${pageNum}/${pageSize}`, { params: { name, levelId, typeId, sort, order } })
 }
 export function getDoctorLevels () {
   return request.get('/doctors/levels')

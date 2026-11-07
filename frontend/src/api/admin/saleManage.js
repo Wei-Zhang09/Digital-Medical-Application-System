@@ -1,8 +1,8 @@
 import request from '../../utils/request'
 
 /** 销售地点 */
-export function getSaleList (pageNum, pageSize, name) {
-  return request.get(`/sales/${pageNum}/${pageSize}`, { params: { name } })
+export function getSaleList (pageNum, pageSize, name, sort, order) {
+  return request.get(`/sales/${pageNum}/${pageSize}`, { params: { name, sort, order } })
 }
 export function getAllSale () {
   return request.get('/sales/all')

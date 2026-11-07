@@ -1,8 +1,8 @@
 import request from '../../utils/request'
 
 /** 医保政策 */
-export function getMedicalPolicyList (pageNum, pageSize, title) {
-  return request.get(`/medicalPolicies/${pageNum}/${pageSize}`, { params: { title } })
+export function getMedicalPolicyList (pageNum, pageSize, title, sort, order) {
+  return request.get(`/medicalPolicies/${pageNum}/${pageSize}`, { params: { title, sort, order } })
 }
 export function addMedicalPolicy (data) {
   return request.post('/medicalPolicies', data)

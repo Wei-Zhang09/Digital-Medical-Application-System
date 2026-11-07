@@ -27,9 +27,11 @@ public class CityController {
     @GetMapping("/{pageNum}/{pageSize}")
     public Msg getCityList(@PathVariable @Min(1) Integer pageNum,
                            @PathVariable @Min(1) Integer pageSize,
-                           @RequestParam(required = false) Integer cityNumber) {
+                           @RequestParam(required = false) Integer cityNumber,
+                           @RequestParam(required = false) String sort,
+                           @RequestParam(required = false) String order) {
         return Msg.success().data("cityPageInfo",
-                cityService.getCityList(pageNum, pageSize, cityNumber));
+                cityService.getCityList(pageNum, pageSize, cityNumber, sort, order));
     }
 
     @ApiOperation("全部城市（下拉框用）")

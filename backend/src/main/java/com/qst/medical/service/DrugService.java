@@ -9,7 +9,7 @@ import com.qst.medical.domain.param.DrugParam;
  */
 public interface DrugService {
 
-    PageBean getDrugList(Integer pageNum, Integer pageSize, String name);
+    PageBean getDrugList(Integer pageNum, Integer pageSize, String name, String drugInfo, String sort, String order);
 
     /** 详情（含关联药店 id），编辑弹窗用 */
     Drug getDrugDetail(Long drugId);

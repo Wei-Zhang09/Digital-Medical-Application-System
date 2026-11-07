@@ -15,6 +15,9 @@ export default {
       pageNum: 1,
       pageSize: 10,
       keyword: '',
+      /** 排序：sort 是列 prop，order 是 asc/desc（后端有白名单校验） */
+      sort: '',
+      order: '',
       dialogVisible: false,
       dialogTitle: '新增',
       submitting: false,
@@ -46,6 +49,13 @@ export default {
     },
     handleSizeChange (size) {
       this.pageSize = size
+      this.pageNum = 1
+      this.fetchList()
+    },
+    /** el-table 的 sort-change：prop 为空表示取消排序 */
+    handleSortChange ({ prop, order }) {
+      this.sort = order ? prop : ''
+      this.order = order === 'descending' ? 'desc' : 'asc'
       this.pageNum = 1
       this.fetchList()
     },

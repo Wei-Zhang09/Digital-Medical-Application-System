@@ -10,7 +10,7 @@ import java.util.List;
 public interface DrugMapper {
 
     /** 按药名模糊查询，联表带出关联药店名称 */
-    List<Drug> selectDrug(@Param("name") String name);
+    List<Drug> selectDrug(@Param("name") String name, @Param("drugInfo") String drugInfo);
 
     Drug selectById(@Param("drugId") Long drugId);
 

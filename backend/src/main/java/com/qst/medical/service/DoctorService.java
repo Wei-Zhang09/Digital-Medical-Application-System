@@ -12,7 +12,8 @@ import java.util.List;
  */
 public interface DoctorService {
 
-    PageBean getDoctorList(Integer pageNum, Integer pageSize, String name);
+    PageBean getDoctorList(Integer pageNum, Integer pageSize, String name,
+                           Integer levelId, Integer typeId, String sort, String order);
 
     /** 医师级别（职称）下拉框 */
     List<DoctorLevel> getAllLevel();

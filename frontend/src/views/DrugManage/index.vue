@@ -10,6 +10,14 @@
           @keyup.enter.native="handleSearch"
           @clear="handleSearch"
         />
+        <el-input
+          v-model="drugInfo"
+          class="search-input"
+          placeholder="按成分搜索"
+          clearable
+          @keyup.enter.native="handleSearch"
+          @clear="handleSearch"
+        />
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">查询</el-button>
         <el-button icon="el-icon-refresh" @click="handleReset">重置</el-button>
         <div class="toolbar-right">
@@ -18,7 +26,7 @@
         </div>
       </div>
 
-      <el-table :data="list" v-loading="loading" border stripe>
+      <el-table :data="list" v-loading="loading" border stripe @sort-change="handleSortChange">
         <el-table-column label="图片" width="90" align="center">
           <template slot-scope="{ row }">
             <el-image
@@ -33,13 +41,13 @@
             <span v-else class="img-empty">无图</span>
           </template>
         </el-table-column>
-        <el-table-column prop="drugName" label="药名" min-width="170" />
-        <el-table-column prop="drugInfo" label="药品成分" min-width="180" />
+        <el-table-column prop="drugName" label="药名" min-width="170" sortable="custom" />
+        <el-table-column prop="drugInfo" label="药品成分" min-width="180" sortable="custom" />
         <el-table-column prop="drugEffect" label="药品功能" min-width="180" />
         <el-table-column prop="saleNames" label="销售药店" min-width="150">
           <template slot-scope="{ row }">{{ row.saleNames || '未关联' }}</template>
         </el-table-column>
-        <el-table-column prop="updatetime" label="更新时间" width="180" align="center" />
+        <el-table-column prop="updatetime" label="更新时间" width="180" align="center" sortable="custom" />
         <el-table-column v-if="isAdmin" label="操作" width="150" fixed="right" align="center">
           <template slot-scope="{ row }">
             <el-button type="text" @click="openEdit(row)">编辑</el-button>
@@ -137,6 +145,7 @@ export default {
   data () {
     return {
       idField: 'drugId',
+      drugInfo: '',
       sales: [],
       rules: {
         drugName: [{ required: true, message: '请输入药名', trigger: 'blur' }],
@@ -150,6 +159,12 @@ export default {
     this.loadSales()
   },
   methods: {
+    handleReset () {
+      this.keyword = ''
+      this.drugInfo = ''
+      this.pageNum = 1
+      this.fetchList()
+    },
     imageUrl (path) {
       if (!path) return ''
       return path.startsWith('/image/') ? IMAGE_BASE + path : path
@@ -159,7 +174,7 @@ export default {
     },
     fetchList () {
       this.loading = true
-      getDrugList(this.pageNum, this.pageSize, this.keyword)
+      getDrugList(this.pageNum, this.pageSize, this.keyword, this.drugInfo, this.sort, this.order)
         .then(res => {
           const page = res.data.drugPageInfo
           this.list = page.list
