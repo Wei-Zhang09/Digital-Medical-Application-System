@@ -73,8 +73,8 @@ export default {
     return {
       exportModule: 'material',
       rules: {
-        title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
-        message: [{ required: true, message: '请输入内容', trigger: 'blur' }]
+        title: [{ required: true, message: '请输入标题', trigger: 'blur' }, { max: 100, message: '最多 100 个字符', trigger: 'blur' }],
+        message: [{ required: true, message: '请输入内容', trigger: 'blur' }, { max: 2000, message: '最多 2000 个字符', trigger: 'blur' }]
       }
     }
   },

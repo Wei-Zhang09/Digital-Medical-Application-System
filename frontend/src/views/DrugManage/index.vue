@@ -150,9 +150,9 @@ export default {
       drugInfo: '',
       sales: [],
       rules: {
-        drugName: [{ required: true, message: '请输入药名', trigger: 'blur' }],
-        drugInfo: [{ required: true, message: '请输入药品成分', trigger: 'blur' }],
-        drugEffect: [{ required: true, message: '请输入药品功能', trigger: 'blur' }]
+        drugName: [{ required: true, message: '请输入药名', trigger: 'blur' }, { max: 60, message: '最多 60 个字符', trigger: 'blur' }],
+        drugInfo: [{ required: true, message: '请输入药品成分', trigger: 'blur' }, { max: 500, message: '最多 500 个字符', trigger: 'blur' }],
+        drugEffect: [{ required: true, message: '请输入药品功能', trigger: 'blur' }, { max: 500, message: '最多 500 个字符', trigger: 'blur' }]
       }
     }
   },

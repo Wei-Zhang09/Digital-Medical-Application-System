@@ -141,12 +141,12 @@ export default {
       types: [],
       rules: {
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-        age: [{ required: true, message: '请输入年龄', trigger: 'blur' }],
+        age: [{ required: true, message: '请输入年龄', trigger: 'blur' }, { type: 'number', min: 18, max: 100, message: '年龄需在 18-100 之间', trigger: 'blur' }],
         sex: [{ required: true, message: '请选择性别', trigger: 'change' }],
         levelId: [{ required: true, message: '请选择职称', trigger: 'change' }],
         typeId: [{ required: true, message: '请选择科室', trigger: 'change' }],
-        phone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
-        hospital: [{ required: true, message: '请输入所属医院', trigger: 'blur' }]
+        phone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }, { pattern: /^1[3-9]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }],
+        hospital: [{ required: true, message: '请输入所属医院', trigger: 'blur' }, { max: 50, message: '最多 50 个字符', trigger: 'blur' }]
       }
     }
   },

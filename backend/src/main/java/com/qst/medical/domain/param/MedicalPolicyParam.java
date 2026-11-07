@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -16,10 +17,12 @@ public class MedicalPolicyParam implements Serializable {
 
     @ApiModelProperty(value = "政策标题", required = true)
     @NotBlank(message = "标题不能为空")
+    @Size(max = 100, message = "标题最多 100 个字符")
     private String title;
 
     @ApiModelProperty(value = "政策内容", required = true)
     @NotBlank(message = "内容不能为空")
+    @Size(max = 2000, message = "内容最多 2000 个字符")
     private String message;
 
     @ApiModelProperty(value = "所属城市 id", required = true)

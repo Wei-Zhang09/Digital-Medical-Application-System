@@ -73,7 +73,7 @@ export default {
       idField: 'cityId',
       exportModule: 'city',
       rules: {
-        cityNumber: [{ required: true, message: '请输入城市编号', trigger: 'blur' }]
+        cityNumber: [{ required: true, message: '请输入城市编号', trigger: 'blur' }, { type: 'number', min: 100, max: 999999, message: '城市编号为 3-6 位数字', trigger: 'blur' }]
       }
     }
   },

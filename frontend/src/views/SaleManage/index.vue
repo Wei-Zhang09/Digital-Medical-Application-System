@@ -84,7 +84,7 @@
           <el-input v-model="form.salePhone" maxlength="30" placeholder="如：13800001111" />
         </el-form-item>
         <el-form-item label="门店地址">
-          <el-input v-model="form.address" maxlength="200" placeholder="可在地图上点选后自动带出" />
+          <el-input v-model="form.address" maxlength="120" placeholder="可在地图上点选后自动带出" />
         </el-form-item>
         <el-form-item label="经纬度">
           <span v-if="form.lng && form.lat" class="coord">{{ form.lng.toFixed(6) }}, {{ form.lat.toFixed(6) }}</span>
@@ -117,8 +117,9 @@ export default {
       amapReady: false,
       allSales: [],
       rules: {
-        saleName: [{ required: true, message: '请输入药店名称', trigger: 'blur' }],
-        salePhone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }]
+        saleName: [{ required: true, message: '请输入药店名称', trigger: 'blur' }, { max: 50, message: '最多 50 个字符', trigger: 'blur' }],
+        salePhone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }, { pattern: /^(1[3-9]\d{9}|0\d{2,3}-?\d{7,8})$/, message: '电话格式不正确（手机 11 位或固话带区号）', trigger: 'blur' }],
+        address: [{ max: 120, message: '最多 120 个字符', trigger: 'blur' }]
       }
     }
   },

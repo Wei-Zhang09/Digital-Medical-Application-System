@@ -74,8 +74,8 @@ export default {
       idField: 'companyId',
       exportModule: 'company',
       rules: {
-        companyName: [{ required: true, message: '请输入公司名称', trigger: 'blur' }],
-        companyPhone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }]
+        companyName: [{ required: true, message: '请输入公司名称', trigger: 'blur' }, { max: 50, message: '最多 50 个字符', trigger: 'blur' }],
+        companyPhone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }, { pattern: /^(1[3-9]\d{9}|0\d{2,3}-?\d{7,8})$/, message: '电话格式不正确（手机 11 位或固话带区号）', trigger: 'blur' }]
       }
     }
   },

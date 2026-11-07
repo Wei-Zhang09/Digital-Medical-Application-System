@@ -6,6 +6,8 @@ import lombok.Data;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -24,6 +26,7 @@ public class DoctorParam implements Serializable {
 
     @ApiModelProperty(value = "姓名", required = true)
     @NotBlank(message = "姓名不能为空")
+    @Size(max = 20, message = "姓名最多 20 个字符")
     private String name;
 
     @ApiModelProperty(value = "年龄", required = true)
@@ -42,6 +45,7 @@ public class DoctorParam implements Serializable {
 
     @ApiModelProperty(value = "联系电话", required = true)
     @NotBlank(message = "联系电话不能为空")
+    @Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机号格式不正确")
     private String phone;
 
     @ApiModelProperty(value = "诊治类型 id", required = true)
@@ -50,8 +54,10 @@ public class DoctorParam implements Serializable {
 
     @ApiModelProperty(value = "所属医院", required = true)
     @NotBlank(message = "所属医院不能为空")
+    @Size(max = 50, message = "医院名称最多 50 个字符")
     private String hospital;
 
     @ApiModelProperty("登录名（不填则自动生成）")
+    @Size(max = 20, message = "登录名最多 20 个字符")
     private String uname;
 }
