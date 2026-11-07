@@ -11,7 +11,7 @@
 
 1. 确认服务在跑：`services.msc` 里看 MySQL09，或管理员命令行 `net start MySQL09`
 2. **双击 `scripts\导入数据库到本机MySQL.bat`**，按提示输入一次 root 密码
-   （脚本会依次建库、导入 `bin_text.sql`、重置口令、加地图字段、改图片路径）
+   （脚本会依次建库、导入 `digital_medical_application_system.sql`、重置口令、加地图字段、改图片路径）
 3. 之后不用再管它，IDEA 直接启动后端即可
 
 `application.properties` 默认就指向 `127.0.0.1:3306`，不需要改配置。
@@ -21,7 +21,7 @@
 | 项 | 值 |
 | --- | --- |
 | 地址 | `127.0.0.1:3307` |
-| 库名 | `bin_text` |
+| 库名 | `digital_medical_application_system` |
 | 账号 | `root` / `123456` |
 | 数据目录 | `.dev\mysql\data` |
 
@@ -82,7 +82,7 @@
 
 `View → Tool Windows → Database` → `+` → Data Source → MySQL：
 
-- Host `127.0.0.1`，Port `3307`，User `root`，Password `123456`，Database `bin_text`
+- Host `127.0.0.1`，Port `3307`，User `root`，Password `123456`，Database `digital_medical_application_system`
 - 首次会提示下载驱动，点 Download
 
 ## 2. 前端：VS Code
@@ -139,7 +139,7 @@ http://localhost:9092/#/user/login
 ## 3. 一次性准备清单（换新电脑时）
 
 1. 装 JDK 17、Node 22（项目内已有 `.dev\node22`，可直接复用整个 `.dev` 目录）
-2. 数据库：`bash scripts/db.sh start`，若数据目录是空的则先导入 `sql/bin_text.sql`
+2. 数据库：`bash scripts/db.sh start`，若数据目录是空的则先导入 `sql/digital_medical_application_system.sql`
 3. 种子图片：`bash scripts/seed-images.sh`
 4. 后端 `mvn clean package -DskipTests` 或 IDEA 里直接 Run
 5. 前端 `npm install`
@@ -149,7 +149,7 @@ http://localhost:9092/#/user/login
 | 现象 | 原因 / 处理 |
 | --- | --- |
 | IDEA 启动报 `Communications link failure` | 方案 A：MySQL09 没起（`net start MySQL09`）；方案 B：没双击 `启动数据库.bat` |
-| 报 `Unknown database 'bin_text'` | 还没导入：双击 `导入数据库到本机MySQL.bat` |
+| 报 `Unknown database 'digital_medical_application_system'` | 还没导入：双击 `导入数据库到本机MySQL.bat` |
 | 登录一直转圈 | 后端没起；或 `.env.development` 地址被改过 |
 | 药品图片显示占位图标 | 运行目录 `uploads` 里没图：`bash scripts/seed-images.sh` |
 | IDEA 控制台中文乱码 | `Help → Edit Custom VM Options` 加 `-Dfile.encoding=UTF-8` 后重启 IDEA |

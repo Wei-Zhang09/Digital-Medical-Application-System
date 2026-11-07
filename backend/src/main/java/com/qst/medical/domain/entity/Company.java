@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 医药公司实体，对应 bin_text.drugcompany。
+ * 医药公司实体，对应 digital_medical_application_system.drugcompany。
  */
 @Data
 public class Company implements Serializable {

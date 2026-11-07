@@ -1,4 +1,10 @@
 /*
+说明：本脚本由课程资料包提供的 bin_text.sql 复制而来。
+原导出库名为 bin_text（见下方 Navicat 元数据，属于溯源信息，保留不改）；
+本项目统一把库名改为 digital_medical_application_system，导入时请建同名库。
+*/
+
+/*
 Navicat MySQL Data Transfer
 
 Source Server         : localhost_3306

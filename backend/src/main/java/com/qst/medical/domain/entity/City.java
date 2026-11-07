@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 城市实体，对应 bin_text.city。
+ * 城市实体，对应 digital_medical_application_system.city。
  */
 @Data
 public class City implements Serializable {

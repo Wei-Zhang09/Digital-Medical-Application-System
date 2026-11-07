@@ -29,7 +29,7 @@ ping -n 2 127.0.0.1 >nul
 goto wait
 
 :ok
-echo 启动成功：127.0.0.1:3307   库 bin_text   账号 root/123456
+echo 启动成功：127.0.0.1:3307   库 digital_medical_application_system   账号 root/123456
 goto end
 
 :already

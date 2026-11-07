@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * 药品实体，对应 bin_text.drug；与药店是多对多，靠 drug_sale 关联。
+ * 药品实体，对应 digital_medical_application_system.drug；与药店是多对多，靠 drug_sale 关联。
  */
 @Data
 public class Drug implements Serializable {

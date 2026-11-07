@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 必备材料实体，对应 bin_text.material。
+ * 必备材料实体，对应 digital_medical_application_system.material。
  */
 @Data
 public class Material implements Serializable {

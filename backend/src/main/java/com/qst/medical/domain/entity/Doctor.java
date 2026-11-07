@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 医师实体，对应 bin_text.doctor。
+ * 医师实体，对应 digital_medical_application_system.doctor。
  *
  * <p>医师信息与登录账号（account）是 1:1：新增医师时同步创建账号，
  * 删除医师时一并删除账号，{@code accountId} 是这条关联。</p>

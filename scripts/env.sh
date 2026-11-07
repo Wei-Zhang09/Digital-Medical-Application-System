@@ -23,7 +23,7 @@ export DB_HOST=127.0.0.1
 export DB_PORT=3307
 export DB_USER=root
 export DB_PASS=123456
-export DB_NAME=bin_text
+export DB_NAME=digital_medical_application_system
 mysql_bin() { "$MYSQL_HOME/bin/mysql.exe" -h"$DB_HOST" -P"$DB_PORT" -u"$DB_USER" -p"$DB_PASS" --default-character-set=utf8mb4 "$@"; }
 
 echo "PROJ_ROOT=$PROJ_ROOT"

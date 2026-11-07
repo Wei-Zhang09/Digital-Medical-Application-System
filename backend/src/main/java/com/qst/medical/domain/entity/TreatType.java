@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-/** 诊治类型（科室），对应 bin_text.treat_type。 */
+/** 诊治类型（科室），对应 digital_medical_application_system.treat_type。 */
 @Data
 public class TreatType implements Serializable {
 

@@ -37,7 +37,7 @@ class PermissionServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        // 模拟 bin_text.permission 的 11 行：Layout(1) + 9 个业务菜单(2-10) + 404(11)
+        // 模拟 digital_medical_application_system.permission 的 11 行：Layout(1) + 9 个业务菜单(2-10) + 404(11)
         allPermissions = new ArrayList<>();
         allPermissions.add(permission(1, 0, "Layout", "/", "Layout", "Layout"));
         String[][] menus = {

@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-/** 医师级别（职称），对应 bin_text.doctor_level。 */
+/** 医师级别（职称），对应 digital_medical_application_system.doctor_level。 */
 @Data
 public class DoctorLevel implements Serializable {
 

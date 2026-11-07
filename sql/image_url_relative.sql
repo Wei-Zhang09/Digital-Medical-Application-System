@@ -4,7 +4,7 @@
 -- 图片必然裂开。改成相对路径后，开发态由 .env.development 拼回 8080，
 -- 生产态由 Nginx 反代 /image/，两边都不用改代码。
 --
--- 用法：mysql ... bin_text < sql/image_url_relative.sql
+-- 用法：mysql ... digital_medical_application_system < sql/image_url_relative.sql
 
 UPDATE drug
 SET drug_img = REPLACE(drug_img, 'http://localhost:8080/image/', '/image/')

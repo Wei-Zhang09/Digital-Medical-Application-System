@@ -38,32 +38,32 @@ if errorlevel 1 (
 )
 echo       连接成功
 
-echo [1/5] 创建数据库 bin_text ...
-"%MYSQL%" --defaults-extra-file="%CNF%" -e "CREATE DATABASE IF NOT EXISTS bin_text DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;"
+echo [1/5] 创建数据库 digital_medical_application_system ...
+"%MYSQL%" --defaults-extra-file="%CNF%" -e "CREATE DATABASE IF NOT EXISTS digital_medical_application_system DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci;"
 if errorlevel 1 goto fail
 
 echo [2/5] 导入建表与种子数据（约 1 MB，稍等 10 秒）...
-"%MYSQL%" --defaults-extra-file="%CNF%" bin_text < "%SQLDIR%\bin_text.sql"
+"%MYSQL%" --defaults-extra-file="%CNF%" digital_medical_application_system < "%SQLDIR%\digital_medical_application_system.sql"
 if errorlevel 1 goto fail
 
 echo [3/5] 统一演示账号口令为 123456 ...
-"%MYSQL%" --defaults-extra-file="%CNF%" bin_text < "%SQLDIR%\reset_pwd.sql" >nul
+"%MYSQL%" --defaults-extra-file="%CNF%" digital_medical_application_system < "%SQLDIR%\reset_pwd.sql" >nul
 if errorlevel 1 goto fail
 
 echo [4/5] 加销售地点经纬度字段（地图扩展）...
-"%MYSQL%" --defaults-extra-file="%CNF%" bin_text < "%SQLDIR%\sale_ext.sql" >nul
+"%MYSQL%" --defaults-extra-file="%CNF%" digital_medical_application_system < "%SQLDIR%\sale_ext.sql" >nul
 if errorlevel 1 goto fail
 
 echo [5/5] 药品图片地址改相对路径 ...
-"%MYSQL%" --defaults-extra-file="%CNF%" bin_text < "%SQLDIR%\image_url_relative.sql" >nul
+"%MYSQL%" --defaults-extra-file="%CNF%" digital_medical_application_system < "%SQLDIR%\image_url_relative.sql" >nul
 if errorlevel 1 goto fail
 
 echo.
 echo 校验结果：
-"%MYSQL%" --defaults-extra-file="%CNF%" -N -e "SELECT CONCAT('  表数量: ', COUNT(*)) FROM information_schema.tables WHERE table_schema='bin_text'; SELECT CONCAT('  账号: ', uname, ' / ', utype) FROM bin_text.account WHERE uname IN ('admin_1','王小明4125'); SELECT CONCAT('  药品: ', COUNT(*), ' 条') FROM bin_text.drug;"
+"%MYSQL%" --defaults-extra-file="%CNF%" -N -e "SELECT CONCAT('  表数量: ', COUNT(*)) FROM information_schema.tables WHERE table_schema='digital_medical_application_system'; SELECT CONCAT('  账号: ', uname, ' / ', utype) FROM digital_medical_application_system.account WHERE uname IN ('admin_1','王小明4125'); SELECT CONCAT('  药品: ', COUNT(*), ' 条') FROM digital_medical_application_system.drug;"
 
 echo.
-echo 完成：库 bin_text 已导入 127.0.0.1:3306
+echo 完成：库 digital_medical_application_system 已导入 127.0.0.1:3306
 echo 管理员 admin_1 / 123456    医师 王小明4125 / 123456
 goto cleanup
 

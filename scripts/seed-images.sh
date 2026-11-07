@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 把种子药品图片放到后端运行目录的 uploads/，让库里那些 http://localhost:8080/image/xxx 能显示。
 #
-# 为什么需要：bin_text.sql 里的 drug.drug_img 是相对路径 /image/xxx，
+# 为什么需要：digital_medical_application_system.sql 里的 drug.drug_img 是相对路径 /image/xxx，
 # 而 /image/** 映射的是「jar 工作目录下的 uploads/」。图片文件在 backend/seed-images/ 里。
 #
 # 两个常见工作目录都要放：

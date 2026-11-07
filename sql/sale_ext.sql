@@ -3,7 +3,7 @@
 -- 作用：给 sale 表补经纬度和地址三列，并给种子数据造出示例坐标（青岛附近）。
 -- 幂等：用存储过程判断列是否存在，重复执行不会报错。
 --
--- 用法：mysql -h127.0.0.1 -P3307 -uroot -p123456 --default-character-set=utf8mb4 bin_text < sql/sale_ext.sql
+-- 用法：mysql -h127.0.0.1 -P3307 -uroot -p123456 --default-character-set=utf8mb4 digital_medical_application_system < sql/sale_ext.sql
 
 DROP PROCEDURE IF EXISTS add_sale_map_columns;
 
