@@ -2,6 +2,7 @@ package com.qst.medical.service.impl;
 
 import com.qst.medical.domain.dataobject.AccountDo;
 import com.qst.medical.domain.dto.AccountDto;
+import com.qst.medical.domain.param.PasswordParam;
 import com.qst.medical.domain.param.RegisterParam;
 import com.qst.medical.mapper.AccountMapper;
 import com.qst.medical.service.AccountService;
@@ -58,6 +59,24 @@ public class AccountServiceImpl implements AccountService {
         account.setCreatetime(now);
         account.setUpdatetime(now);
         accountMapper.insertAccount(account);
+    }
+
+    @Override
+    public void changePassword(Long accountId, PasswordParam param) {
+        AccountDo account = accountMapper.selectById(accountId);
+        if (account == null) {
+            throw new IllegalArgumentException("账号不存在");
+        }
+        if (!passwordEncoder.matches(param.getOldPwd(), account.getPwd())) {
+            throw new IllegalArgumentException("原密码不正确");
+        }
+        if (!param.getNewPwd().equals(param.getConfirmPwd())) {
+            throw new IllegalArgumentException("两次输入的新密码不一致");
+        }
+        if (param.getOldPwd().equals(param.getNewPwd())) {
+            throw new IllegalArgumentException("新密码不能与原密码相同");
+        }
+        accountMapper.updatePwd(accountId, passwordEncoder.encode(param.getNewPwd()));
     }
 
     @Override

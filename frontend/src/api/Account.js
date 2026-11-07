@@ -9,3 +9,11 @@ import request from '../utils/request'
 export function register (payload) {
   return request.post('/register', payload)
 }
+
+/**
+ * 修改当前登录用户的密码。
+ * 后端从 JWT 取身份，前端只传三个密码字段。
+ */
+export function changePassword (payload) {
+  return request.post('/account/password', payload)
+}

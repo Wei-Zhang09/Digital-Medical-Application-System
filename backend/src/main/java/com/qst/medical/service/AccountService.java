@@ -1,6 +1,7 @@
 package com.qst.medical.service;
 
 import com.qst.medical.domain.dto.AccountDto;
+import com.qst.medical.domain.param.PasswordParam;
 import com.qst.medical.domain.param.RegisterParam;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -27,4 +28,13 @@ public interface AccountService extends UserDetailsService {
      * @throws IllegalArgumentException 登录名已存在 / 两次密码不一致
      */
     void register(RegisterParam param);
+
+    /**
+     * 修改当前登录用户的口令。
+     *
+     * @param accountId 当前登录用户 id（来自 JWT，不接受前端传参）
+     * @param param     原密码 / 新密码 / 确认新密码
+     * @throws IllegalArgumentException 原密码错误 / 两次新密码不一致 / 新旧密码相同
+     */
+    void changePassword(Long accountId, PasswordParam param);
 }
