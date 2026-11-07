@@ -23,7 +23,9 @@ case "${1:-start}" in
     WIN_DATADIR="$(cygpath -w "$DATADIR")"
     WIN_LOG="$(cygpath -w "$LOGFILE")"
     WIN_PID="$(cygpath -w "$PIDFILE")"
-    powershell -NoProfile -Command "Start-Process -FilePath 'C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqld.exe' -ArgumentList @('--no-defaults','--basedir=C:\Program Files\MySQL\MySQL Server 8.0','--datadir=$WIN_DATADIR','--port=$PORT','--bind-address=127.0.0.1','--character-set-server=utf8mb4','--collation-server=utf8mb4_general_ci','--lower-case-table-names=1','--log-error=$WIN_LOG','--mysqlx=OFF','--pid-file=$WIN_PID') -WindowStyle Hidden" >/dev/null 2>&1
+    # 注意：Start-Process 的 -ArgumentList 数组是用空格拼成命令行的，
+    # 路径里有空格（本项目目录就带空格）必须给参数值加内层双引号，否则 datadir 会被截断。
+    powershell -NoProfile -Command "Start-Process -FilePath 'C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqld.exe' -ArgumentList @('--no-defaults','--basedir=\"C:\Program Files\MySQL\MySQL Server 8.0\"','--datadir=\"$WIN_DATADIR\"','--port=$PORT','--bind-address=127.0.0.1','--character-set-server=utf8mb4','--collation-server=utf8mb4_general_ci','--lower-case-table-names=1','--log-error=\"$WIN_LOG\"','--mysqlx=OFF','--pid-file=\"$WIN_PID\"') -WindowStyle Hidden" >/dev/null 2>&1
 
     for i in $(seq 1 30); do sleep 1; if is_up; then echo "MySQL 已启动：127.0.0.1:$PORT"; exit 0; fi; done
     echo "启动失败，看日志：$LOGFILE"; tail -20 "$LOGFILE"; exit 1

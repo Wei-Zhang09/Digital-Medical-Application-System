@@ -48,6 +48,7 @@ echo "== 5/5 启动 =="
 if [ "${1:-all}" = "build" ]; then echo "只构建，未启动"; exit 0; fi
 
 ( cd "$NGINX_DIR" && ./nginx.exe -t && ./nginx.exe )
+export DB_PORT="${DB_PORT:-3307}"   # 连本机 MySQL09 就用 DB_PORT=3306 bash scripts/deploy.sh
 nohup java -jar "$PROJ_ROOT/backend/target/medicai-1.0-SNAPSHOT.jar" > "$PROJ_ROOT/backend/target/app.log" 2>&1 &
 echo "等待后端启动..."
 for i in $(seq 1 40); do

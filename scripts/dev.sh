@@ -49,6 +49,9 @@ start_db_and_backend () {
     bash "$PROJ_ROOT/scripts/seed-images.sh" "$PROJ_ROOT/backend/target/uploads" >/dev/null
     # java 是原生 Windows 程序，不认 /d/... 路径；用 PowerShell 的 Start-Process
     # 以 target 为工作目录启动，进程完全脱离当前 shell（否则脚本退出后终端会一直挂着）
+    # 数据源端口：默认用项目自带实例（3307）；想连本机 MySQL09（3306）就
+    # DB_PORT=3306 bash scripts/dev.sh
+    export DB_PORT="${DB_PORT:-3307}"
     WIN_TARGET="$(cygpath -w "$PROJ_ROOT/backend/target")"
     WIN_LOG="$(cygpath -w "$LOG")"
     powershell -NoProfile -Command "Start-Process -FilePath 'java' -ArgumentList '-jar','medicai-1.0-SNAPSHOT.jar' -WorkingDirectory '$WIN_TARGET' -WindowStyle Hidden -RedirectStandardOutput '$WIN_LOG' -RedirectStandardError '$WIN_LOG.err'" >/dev/null
