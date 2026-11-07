@@ -14,7 +14,19 @@
    （脚本会依次建库、导入 `digital_medical_application_system.sql`、重置口令、加地图字段、改图片路径）
 3. 之后不用再管它，IDEA 直接启动后端即可
 
-`application.properties` 默认就指向 `127.0.0.1:3306`，不需要改配置。
+`application.properties` 默认就指向 `127.0.0.1:3306`。
+
+**数据库口令放哪里**：不要写进 `application.properties`（那是受版本控制的文件，会推到仓库）。
+放同目录的 `application-local.properties`，它已经在 `.gitignore` 里：
+
+```properties
+# backend/src/main/resources/application-local.properties
+spring.datasource.username=你的用户名
+spring.datasource.password=你的口令
+```
+
+`application.properties` 里有一行 `spring.config.import=optional:classpath:application-local.properties`，
+启动时会自动把这个本地文件合并进来。也可以用环境变量 `DB_USER` / `DB_PASS` 覆盖。
 
 ### 方案 B：用项目自带的 3307 实例（隔离，不碰你的 MySQL09）
 

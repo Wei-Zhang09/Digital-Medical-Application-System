@@ -32,3 +32,6 @@ docs/report/*.docx
 HANDOVER.md
 # 交付压缩包（16MB，推送超时；用 scripts/package.sh 重建）
 docs/report/*.zip
+
+# 本机数据库口令（不进仓库）
+**/application-local.properties
