@@ -12,6 +12,7 @@
         />
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">查询</el-button>
         <el-button icon="el-icon-refresh" @click="handleReset">重置</el-button>
+        <el-button icon="el-icon-download" :loading="exporting" @click="handleExport">导出</el-button>
         <div class="toolbar-right" v-if="isAdmin">
           <el-button type="primary" icon="el-icon-plus" @click="openAdd">新增材料</el-button>
         </div>
@@ -70,6 +71,7 @@ export default {
   mixins: [crudPage],
   data () {
     return {
+      exportModule: 'material',
       rules: {
         title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
         message: [{ required: true, message: '请输入内容', trigger: 'blur' }]

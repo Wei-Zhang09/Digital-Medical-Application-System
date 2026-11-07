@@ -105,6 +105,13 @@
         <!-- SwaggerConfig 用到 com.google.common.base.Predicates，由 springfox 传递依赖提供 -->
 
         <!-- PageHelper 分页 -->
+        <!-- 导出 Excel（.xlsx）：只用到最基础的写单元格，不用 EasyExcel 那套注解 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>

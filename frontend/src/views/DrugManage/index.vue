@@ -20,6 +20,7 @@
         />
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">查询</el-button>
         <el-button icon="el-icon-refresh" @click="handleReset">重置</el-button>
+        <el-button icon="el-icon-download" :loading="exporting" @click="handleExport">导出</el-button>
         <div class="toolbar-right">
           <!-- 医师也能新增药品（官方任务 21：新增放给角色 1、2） -->
           <el-button type="primary" icon="el-icon-plus" @click="openAdd">新增药品</el-button>
@@ -145,6 +146,7 @@ export default {
   data () {
     return {
       idField: 'drugId',
+      exportModule: 'drug',
       drugInfo: '',
       sales: [],
       rules: {
@@ -164,6 +166,14 @@ export default {
       this.drugInfo = ''
       this.pageNum = 1
       this.fetchList()
+    },
+    buildExportParams () {
+      return {
+        keyword: this.keyword,
+        drugInfo: this.drugInfo,
+        sort: this.sort,
+        order: this.order
+      }
     },
     imageUrl (path) {
       if (!path) return ''

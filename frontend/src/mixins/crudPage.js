@@ -1,4 +1,5 @@
 import app from '../utils/app'
+import { downloadExport } from '../utils/download'
 
 /**
  * 列表页公共逻辑：分页、关键字、弹窗开关、删除确认。
@@ -24,7 +25,10 @@ export default {
       editId: null,
       form: {},
       /** 各表主键字段名不同（id / cityId / companyId / drugId / saleId），子类覆盖 */
-      idField: 'id'
+      idField: 'id',
+      /** 导出模块名，子类覆盖（doctor/drug/company/...） */
+      exportModule: '',
+      exporting: false
     }
   },
   computed: {
@@ -51,6 +55,16 @@ export default {
       this.pageSize = size
       this.pageNum = 1
       this.fetchList()
+    },
+    /** 导出当前筛选条件下的全部数据 */
+    handleExport () {
+      if (!this.exportModule) return
+      this.exporting = true
+      downloadExport(this.exportModule, this.buildExportParams()).finally(() => { this.exporting = false })
+    },
+    /** 子类有额外筛选条件时覆盖 */
+    buildExportParams () {
+      return { keyword: this.keyword, sort: this.sort, order: this.order }
     },
     /** el-table 的 sort-change：prop 为空表示取消排序 */
     handleSortChange ({ prop, order }) {

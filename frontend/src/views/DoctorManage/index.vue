@@ -18,6 +18,7 @@
         </el-select>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">查询</el-button>
         <el-button icon="el-icon-refresh" @click="handleReset">重置</el-button>
+        <el-button icon="el-icon-download" :loading="exporting" @click="handleExport">导出</el-button>
         <div class="toolbar-right" v-if="isAdmin">
           <el-button type="primary" icon="el-icon-plus" @click="openAdd">新增医师</el-button>
         </div>
@@ -135,6 +136,7 @@ export default {
   mixins: [crudPage],
   data () {
     return {
+      exportModule: 'doctor',
       levels: [],
       types: [],
       rules: {
@@ -159,6 +161,15 @@ export default {
       this.typeId = null
       this.pageNum = 1
       this.fetchList()
+    },
+    buildExportParams () {
+      return {
+        keyword: this.keyword,
+        levelId: this.levelId,
+        typeId: this.typeId,
+        sort: this.sort,
+        order: this.order
+      }
     },
     loadOptions () {
       getDoctorLevels().then(res => { this.levels = res.data.levels || [] }).catch(() => {})

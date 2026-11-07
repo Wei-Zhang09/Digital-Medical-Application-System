@@ -12,6 +12,7 @@
         />
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">查询</el-button>
         <el-button icon="el-icon-refresh" @click="handleReset">重置</el-button>
+        <el-button icon="el-icon-download" :loading="exporting" @click="handleExport">导出</el-button>
 
         <div class="toolbar-right">
           <!-- 扩展功能：列表 / 地图切换 -->
@@ -110,6 +111,7 @@ export default {
   data () {
     return {
       idField: 'saleId',
+      exportModule: 'sale',
       mapMode: false,
       placing: false,
       amapReady: false,

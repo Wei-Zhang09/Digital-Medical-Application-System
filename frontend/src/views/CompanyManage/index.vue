@@ -12,6 +12,7 @@
         />
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">查询</el-button>
         <el-button icon="el-icon-refresh" @click="handleReset">重置</el-button>
+        <el-button icon="el-icon-download" :loading="exporting" @click="handleExport">导出</el-button>
         <div class="toolbar-right" v-if="isAdmin">
           <el-button type="primary" icon="el-icon-plus" @click="openAdd">新增公司</el-button>
         </div>
@@ -71,6 +72,7 @@ export default {
   data () {
     return {
       idField: 'companyId',
+      exportModule: 'company',
       rules: {
         companyName: [{ required: true, message: '请输入公司名称', trigger: 'blur' }],
         companyPhone: [{ required: true, message: '请输入联系电话', trigger: 'blur' }]
