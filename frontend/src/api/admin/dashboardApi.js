@@ -4,3 +4,12 @@ import request from '../../utils/request'
 export function getDashboard () {
   return request.get('/dashboard')
 }
+
+/**
+ * 首页资讯详情。
+ * @param {string} source medical / company / material
+ * @param {number} id 对应表的 id
+ */
+export function getNewsDetail (source, id) {
+  return request.get(`/dashboard/news/${source}/${id}`)
+}

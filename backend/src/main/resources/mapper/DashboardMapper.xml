@@ -37,14 +37,17 @@
 
     <!-- 三张内容表合并后按时间倒序取前 N 条 -->
     <select id="selectLatestNews" resultType="com.qst.medical.domain.model.DashboardModel$NewsItemModel">
-        SELECT title, time, source FROM (
-            SELECT title, DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS time, '医保政策' AS source
+        SELECT id, title, time, source, source_code AS sourceCode FROM (
+            SELECT id, title, DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS time,
+                   '医保政策' AS source, 'medical' AS source_code
             FROM medical_policy
             UNION ALL
-            SELECT title, DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS time, '公司政策' AS source
+            SELECT id, title, DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS time,
+                   '公司政策' AS source, 'company' AS source_code
             FROM company_policy
             UNION ALL
-            SELECT title, DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS time, '必备材料' AS source
+            SELECT id, title, DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%s') AS time,
+                   '必备材料' AS source, 'material' AS source_code
             FROM material
         ) t
         ORDER BY time DESC

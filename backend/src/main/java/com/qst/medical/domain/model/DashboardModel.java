@@ -36,9 +36,12 @@ public class DashboardModel implements Serializable {
     @Data
     public static class NewsItemModel implements Serializable {
         private static final long serialVersionUID = 1L;
+        private Long id;
         private String title;
         private String time;
-        /** 来源：医保政策 / 公司政策 / 必备材料 */
+        /** 来源（中文）：医保政策 / 公司政策 / 必备材料 */
         private String source;
+        /** 来源代码：medical / company / material，前端点开详情时用 */
+        private String sourceCode;
     }
 }

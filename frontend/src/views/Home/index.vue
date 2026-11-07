@@ -36,7 +36,13 @@
     <!-- 最新资讯 -->
     <el-card shadow="never" class="news-card">
       <div slot="header" class="card-title">最新资讯</div>
-      <el-table :data="data.news || []" size="small" :show-header="false">
+      <el-table
+        :data="data.news || []"
+        size="small"
+        :show-header="false"
+        class="news-table"
+        @row-click="openNews"
+      >
         <el-table-column prop="title" show-overflow-tooltip />
         <el-table-column width="110" align="center">
           <template slot-scope="{ row }">
@@ -47,12 +53,28 @@
       </el-table>
       <p v-if="!(data.news || []).length" class="empty-tip">暂无资讯</p>
     </el-card>
+
+    <!-- 资讯详情 -->
+    <el-dialog :title="newsDetail.source || '资讯详情'" :visible.sync="newsVisible" width="560px">
+      <div v-loading="newsLoading" class="news-detail">
+        <h3 class="news-title">{{ newsDetail.title }}</h3>
+        <p class="news-meta">
+          <el-tag size="mini" type="info">{{ newsDetail.source }}</el-tag>
+          <span class="news-time">{{ newsDetail.time }}</span>
+        </p>
+        <div class="news-content">{{ newsDetail.content || '（暂无正文）' }}</div>
+      </div>
+      <span slot="footer">
+        <el-button size="small" @click="newsVisible = false">关 闭</el-button>
+        <el-button size="small" type="primary" @click="goModule">前往该模块</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import echarts from 'echarts'
-import { getDashboard } from '../../api/admin/dashboardApi'
+import { getDashboard, getNewsDetail } from '../../api/admin/dashboardApi'
 
 export default {
   name: 'Home',
@@ -60,6 +82,9 @@ export default {
     return {
       loading: false,
       data: {},
+      newsVisible: false,
+      newsLoading: false,
+      newsDetail: {},
       cards: [
         { key: 'doctorCount', label: '医师数量', icon: 'el-icon-user', bg: '#e8f8f5', color: '#13b7a5' },
         { key: 'companyCount', label: '医药公司', icon: 'el-icon-office-building', bg: '#eef4ff', color: '#4a7dff' },
@@ -78,6 +103,25 @@ export default {
     if (this.typeChart) this.typeChart.dispose()
   },
   methods: {
+    /** 点开最新资讯：按来源查详情 */
+    openNews (row) {
+      if (!row || !row.sourceCode) return
+      this.newsDetail = { title: row.title, source: row.source, time: row.time, content: '' }
+      this.newsVisible = true
+      this.newsLoading = true
+      getNewsDetail(row.sourceCode, row.id)
+        .then(res => {
+          this.newsDetail = res.data.news || this.newsDetail
+        })
+        .catch(() => {})
+        .finally(() => { this.newsLoading = false })
+    },
+    /** 跳到对应管理页面 */
+    goModule () {
+      const path = this.newsDetail.modulePath
+      this.newsVisible = false
+      if (path) this.$router.push(path).catch(() => {})
+    },
     loadDashboard () {
       this.loading = true
       getDashboard()
@@ -149,6 +193,39 @@ export default {
 </script>
 
 <style scoped>
+.news-table >>> .el-table__row {
+  cursor: pointer;
+}
+.news-table >>> .el-table__row:hover > td {
+  background-color: #f2fbf9 !important;
+}
+.news-detail {
+  min-height: 80px;
+}
+.news-title {
+  margin: 0 0 10px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #303133;
+}
+.news-meta {
+  margin: 0 0 14px;
+  font-size: 12px;
+  color: #909399;
+}
+.news-time {
+  margin-left: 10px;
+}
+.news-content {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #606266;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 320px;
+  overflow: auto;
+}
+
 .stat-card {
   margin-bottom: 16px;
 }
