@@ -23,6 +23,14 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!--
+            Spring Boot 2.5.3 默认带 Lombok 1.18.20，只支持到 JDK 17。
+            如果 IDE 里误用了 JDK 21+，编译会报：
+              NoSuchFieldError: JCTree$JCImport does not have member field 'qualid'
+            这里显式抬到 1.18.34，JDK 17 / 21 都能编过。
+        -->
+        <lombok.version>1.18.34</lombok.version>
     </properties>
 
     <dependencies>
